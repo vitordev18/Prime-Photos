@@ -1,0 +1,888 @@
+:root {
+  --deep-dark: #220901;      
+  --bright-orange: #f6aa1c;    
+  --strong-orange: #bc3908;    
+  --dark-red: #621708;         
+  --beige: #f5f5dc;          
+  --white: #fff;              
+  --light-gray: #e0e0e0;      
+  --main-cta-hover-bg: #ffb84d;   
+  --main-cta-hover-color: #222;   
+  --menu-item-hover-bg: rgba(246, 170, 28, 0.1);     
+  --header-button-hover-bg: rgba(246, 170, 28, 0.1);  
+  --primary-font: 'Playfair Display', serif;   
+  --secondary-font: 'Inter', sans-serif;       
+}
+
+html {
+  scroll-behavior: smooth;  /* Scroll suave entre seções */
+  overflow-y: scroll;       /* Sempre mostra scrollbar vertical */
+}
+
+body {
+  background-color: var(--beige);  
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  opacity: 0;            /* Inicia invisível para animação de carregamento */
+  transition: opacity 0.6s ease-in-out;  /* Transição suave para aparecer */
+}
+
+/* Classe adicionada quando a página termina de carregar */
+body.loaded {
+  opacity: 1;
+}
+
+.scroll-progress {
+  position: fixed;          /* Fixa no topo da tela */
+  top: 0;
+  left: 0;
+  width: 0%;               /* Inicia com 0% de largura */
+  height: 3px;             /* Altura da barra */
+  background: linear-gradient(90deg, var(--bright-orange), var(--strong-orange));  /* Gradiente laranja */
+  z-index: 9999;           /* Fica acima de tudo */
+  transition: width 0.1s ease-out;  /* Transição suave da largura */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* Sombra sutil */
+}
+
+.scroll-animate {
+  opacity: 0;              /* Inicia invisível */
+  transform: translateY(30px);  /* Inicia 30px abaixo da posição final */
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);  /* Transição suave */
+  will-change: transform, opacity;  /* Otimização de performance */
+}
+
+.scroll-animate.animate-in {
+  opacity: 1;              /* Fica visível */
+  transform: translateY(0);  /* Vai para posição final */
+}
+
+/* Fade in de cima para baixo */
+.fade-in-down {
+  transform: translateY(-30px);  /* Inicia 30px acima */
+}
+
+.fade-in-down.animate-in {
+  transform: translateY(0);      /* Vai para posição normal */
+}
+
+/* Fade in de baixo para cima */
+.fade-in-up {
+  transform: translateY(30px);   /* Inicia 30px abaixo */
+}
+
+.fade-in-up.animate-in {
+  transform: translateY(0);      /* Vai para posição normal */
+}
+
+/* Fade in da esquerda */
+.fade-in-left {
+  transform: translateX(-30px);  /* Inicia 30px à esquerda */
+}
+
+.fade-in-left.animate-in {
+  transform: translateX(0);      /* Vai para posição normal */
+}
+
+/* Fade in da direita */
+.fade-in-right {
+  transform: translateX(30px);   /* Inicia 30px à direita */
+}
+
+.fade-in-right.animate-in {
+  transform: translateX(0);      /* Vai para posição normal */
+}
+
+.scale-in {
+  transform: scale(0.8);         /* Inicia 20% menor */
+}
+
+.scale-in.animate-in {
+  transform: scale(1);           /* Vai para tamanho normal */
+}
+
+.header {
+  background-color: var(--dark-red);  /* Fundo vermelho escuro */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  min-height: 80px;
+  position: relative;
+  overflow: hidden;              /* Esconde overflow para efeitos */
+}
+
+/* Efeito de brilho que passa pelo header */
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;                  /* Inicia fora da tela à esquerda */
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(246, 170, 28, 0.1), transparent);
+  transition: left 0.8s ease-in-out;
+}
+
+/* Quando animado, o brilho passa da esquerda para a direita */
+.header.animate-in::before {
+  left: 100%;                   /* Termina fora da tela à direita */
+}
+
+/* Logo do cabeçalho */
+.header-logo {
+  width: 60px;
+  height: auto;
+  margin: 12px 16px 12px 24px;
+  display: inline-block;
+  vertical-align: middle;
+  transition: transform 0.3s ease;  /* Transição suave no hover */
+}
+
+/* Efeito de escala no hover do logo */
+.header-logo:hover {
+  transform: scale(1.05);       /* Aumenta 5% no hover */
+}
+
+/* Título do cabeçalho */
+.header-title {
+  color: var(--white);
+  font-family: var(--primary-font);
+  font-size: 2rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  position: relative;
+}
+
+/* Linha decorativa que aparece sob o título */
+.header-title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;                     /* Inicia com 0 de largura */
+  height: 2px;
+  background: var(--bright-orange);
+  transition: width 0.6s ease-in-out;
+}
+
+/* Quando animado, a linha cresce da esquerda para a direita */
+.header-title.animate-in::after {
+  width: 100%;                  /* Vai para largura total */
+}
+
+/* Menu de navegação */
+.header-menu {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* Lista de itens do menu */
+.header-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: var(--white);
+  font-family: var(--secondary-font);
+  font-size: 1rem;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+/* Item individual do menu */
+.menu-item {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Linha decorativa sob cada item do menu */
+.menu-item::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -100%;                  /* Inicia fora da tela */
+  width: 100%;
+  height: 2px;
+  background: var(--bright-orange);
+  transition: left 0.3s ease-in-out;
+}
+
+/* Quando animado, a linha aparece da esquerda */
+.menu-item.animate-in::before {
+  left: 0;                      /* Vai para posição normal */
+}
+
+/* Links do menu */
+.menu-item a {
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.2s, background-color 0.2s, transform 0.2s;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: block;
+}
+
+/* Efeitos de hover nos links do menu */
+.menu-item a:hover,
+.menu-item a:focus {
+  color: var(--bright-orange);
+  background-color: var(--menu-item-hover-bg);
+  transform: translateY(-2px);  /* Move 2px para cima */
+}
+
+/* Container dos botões do cabeçalho */
+.header-buttons {
+  display: flex;
+  align-items: center;
+  margin-right: 24px;
+  gap: 12px;
+}
+
+/* Ícones dos botões */
+.header-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Botões do cabeçalho */
+.header-buttons button {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efeito de círculo que cresce no hover */
+.header-buttons button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: var(--bright-orange);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+/* Quando hover, o círculo cresce */
+.header-buttons button:hover::before,
+.header-buttons button:focus::before {
+  width: 100%;
+  height: 100%;
+}
+
+/* Efeitos de hover nos botões */
+.header-buttons button:hover,
+.header-buttons button:focus {
+  background: var(--header-button-hover-bg);
+  transform: scale(1.1);        /* Aumenta 10% */
+}
+
+/* Efeitos de hover nos ícones */
+.header-buttons button:hover .header-icon,
+.header-buttons button:focus .header-icon {
+  transform: scale(1.1);        /* Aumenta 10% */
+  filter: brightness(1.2);      /* Fica 20% mais brilhante */
+}
+
+.main-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.5rem;
+  min-height: 60vh;              /* Altura mínima de 60% da viewport */
+  padding: 3rem 1rem 2rem 1rem;
+  position: relative;
+}
+
+/* Efeito de gradiente radial no fundo */
+.main-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(246, 170, 28, 0.05) 0%, transparent 70%);
+  opacity: 0;                    /* Inicia invisível */
+  transition: opacity 0.8s ease-in-out;
+  pointer-events: none;          /* Não interfere com cliques */
+}
+
+/* Quando animado, o gradiente aparece */
+.main-section.animate-in::before {
+  opacity: 1;
+}
+
+/* Título principal com efeito de brilho */
+.main-description {
+  font-family: var(--primary-font);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    var(--bright-orange),
+    var(--white) 40%,
+    var(--bright-orange) 60%,
+    var(--bright-orange)
+  );
+  background-size: 200% auto;    /* Tamanho do gradiente para animação */
+  color: var(--dark-red);
+  background-clip: text;         /* Aplica gradiente apenas ao texto */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 5s linear infinite;  /* Animação contínua de brilho */
+  transform-origin: center;
+}
+
+/* Quando animado, adiciona efeito de bounce */
+.main-description.animate-in {
+  animation: shine 5s linear infinite, bounceIn 1s ease-out;
+}
+
+/* Subtítulo da seção principal */
+.main-subtext {
+  font-family: var(--secondary-font);
+  font-size: 1.15rem;
+  color: var(--dark-red);
+  max-width: 600px;
+  margin: 0;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* Linha decorativa sob o subtítulo */
+.main-subtext::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 0;                     /* Inicia com 0 de largura */
+  height: 2px;
+  background: var(--bright-orange);
+  transition: all 0.6s ease-in-out;
+  transform: translateX(-50%);
+}
+
+/* Quando animado, a linha cresce do centro */
+.main-subtext.animate-in::after {
+  width: 100px;                 /* Vai para 100px de largura */
+}
+
+/* Botão Call-to-Action principal */
+.main-cta {
+  margin-top: 0.5rem;
+  padding: 0.75rem 2rem;
+  background: var(--bright-orange);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efeito de brilho que passa pelo botão */
+.main-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;                  /* Inicia fora da tela */
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.6s ease-in-out;
+}
+
+/* Quando hover, o brilho passa da esquerda para a direita */
+.main-cta:hover::before {
+  left: 100%;                   /* Termina fora da tela */
+}
+
+/* Efeitos de hover no botão CTA */
+.main-cta:hover,
+.main-cta:focus {
+  background: var(--main-cta-hover-bg);
+  color: var(--main-cta-hover-color);
+  transform: translateY(-3px);  /* Move 3px para cima */
+  box-shadow: 0 4px 16px rgba(246, 170, 28, 0.3);  /* Sombra colorida */
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: var(--light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bright-orange);
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--strong-orange);
+}
+
+/* Animação de brilho para o título principal */
+@keyframes shine {
+  0% {
+    background-position: 200% 0;  /* Inicia com gradiente fora da tela */
+  }
+  100% {
+    background-position: -200% 0; /* Move gradiente para fora da tela */
+  }
+}
+
+/* Animação de bounce para elementos que entram */
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);      /* Cresce 5% além do normal */
+  }
+  70% {
+    transform: scale(0.9);       /* Diminui 10% */
+  }
+  100% {
+    transform: scale(1);         /* Volta ao tamanho normal */
+    opacity: 1;
+  }
+}
+
+/* Animação de slide da esquerda */
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Animação de slide da direita */
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .scroll-animate {
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);  /* Transição mais rápida em mobile */
+  }
+  
+  .main-description {
+    font-size: 1.8rem;           /* Título menor em mobile */
+  }
+  
+  .main-subtext {
+    font-size: 1rem;             /* Subtítulo menor em mobile */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Remove todas as animações para usuários que preferem menos movimento */
+  .scroll-animate,
+  .main-description,
+  .main-cta,
+  .header-logo,
+  .header-icon,
+  .menu-item a {
+    transition: none;
+    animation: none;
+  }
+  
+  /* Esconde a barra de progresso */
+  .scroll-progress {
+    display: none;
+  }
+}
+
+.section-container {
+  max-width: 1200px;             /* Largura máxima do conteúdo */
+  margin: 0 auto;                /* Centraliza o conteúdo */
+  padding: 0 2rem;               /* Padding lateral */
+}
+
+/* Títulos das seções */
+.section-title {
+  font-family: var(--primary-font);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--dark-red);
+  text-align: center;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+/* Linha decorativa sob os títulos das seções */
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 0;                     /* Inicia com 0 de largura */
+  height: 3px;
+  background: var(--bright-orange);
+  transition: width 0.8s ease-in-out;
+  transform: translateX(-50%);
+}
+
+/* Quando animado, a linha cresce do centro */
+.section-title.animate-in::after {
+  width: 100px;                 /* Vai para 100px de largura */
+}
+
+/* Subtítulos das seções */
+.section-subtitle {
+  font-family: var(--secondary-font);
+  font-size: 1.2rem;
+  color: var(--dark-red);
+  text-align: center;
+  margin-bottom: 3rem;
+  opacity: 0.8;                 /* Ligeiramente transparente */
+}
+
+.products-section {
+  padding: 5rem 0;              /* Espaçamento vertical */
+  background: linear-gradient(135deg, rgba(246, 170, 28, 0.05) 0%, rgba(98, 23, 8, 0.05) 100%);
+  position: relative;
+}
+
+/* Padrão de fundo sutil com SVG */
+.products-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23f6aa1c" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23f6aa1c" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="%23f6aa1c" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  opacity: 0.3;
+  pointer-events: none;          /* Não interfere com cliques */
+}
+
+/* Grid responsivo para os produtos */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  /* Cards responsivos */
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+/* Cards individuais de produtos */
+.product-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efeito de brilho que passa pelos cards */
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;                  /* Inicia fora da tela */
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(246, 170, 28, 0.1), transparent);
+  transition: left 0.6s ease-in-out;
+}
+
+/* Quando hover, o brilho passa da esquerda para a direita */
+.product-card:hover::before {
+  left: 100%;                   /* Termina fora da tela */
+}
+
+/* Efeitos de hover nos cards */
+.product-card:hover {
+  transform: translateY(-10px);  /* Move 10px para cima */
+  box-shadow: 0 8px 30px rgba(246, 170, 28, 0.2);  /* Sombra colorida */
+}
+
+/* Container da imagem do produto */
+.product-image {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Placeholder da imagem com gradiente */
+.image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, var(--bright-orange), var(--strong-orange));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-family: var(--primary-font);
+  font-size: 1.5rem;
+  position: relative;
+}
+
+/* Ícone de câmera no placeholder */
+.image-placeholder::before {
+  content: '📸';
+  font-size: 3rem;
+}
+
+/* Título do produto */
+.product-title {
+  font-family: var(--primary-font);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--dark-red);
+  margin-bottom: 1rem;
+}
+
+/* Descrição do produto */
+.product-description {
+  font-family: var(--secondary-font);
+  font-size: 1rem;
+  color: var(--dark-red);
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+.about-section {
+  padding: 5rem 0;
+  background: var(--white);
+}
+
+/* Container do conteúdo sobre */
+.about-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+/* Texto sobre a empresa */
+.about-text {
+  max-width: 600px;
+  text-align: center;
+}
+
+/* Descrição sobre a empresa */
+.about-description {
+  font-family: var(--secondary-font);
+  font-size: 1.2rem;
+  color: var(--dark-red);
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+
+/* Grid das estatísticas */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));  /* Grid responsivo */
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Item individual de estatística */
+.stat-item {
+  text-align: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(246, 170, 28, 0.1) 0%, rgba(98, 23, 8, 0.1) 100%);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+/* Efeitos de hover nas estatísticas */
+.stat-item:hover {
+  transform: scale(1.05);        /* Aumenta 5% */
+  background: linear-gradient(135deg, rgba(246, 170, 28, 0.2) 0%, rgba(98, 23, 8, 0.2) 100%);
+}
+
+/* Número da estatística */
+.stat-number {
+  display: block;
+  font-family: var(--primary-font);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--bright-orange);
+  margin-bottom: 0.5rem;
+}
+
+/* Label da estatística */
+.stat-label {
+  font-family: var(--secondary-font);
+  font-size: 1rem;
+  color: var(--dark-red);
+  font-weight: 500;
+}
+
+.contact-section {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, var(--dark-red) 0%, var(--strong-orange) 100%);  /* Gradiente escuro */
+  color: var(--white);
+}
+
+/* Título da seção de contato em branco */
+.contact-section .section-title {
+  color: var(--white);
+}
+
+/* Subtítulo da seção de contato em bege */
+.contact-section .section-subtitle {
+  color: var(--beige);
+}
+
+/* Container do conteúdo de contato */
+.contact-content {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+/* Grid das informações de contato */
+.contact-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  /* Grid responsivo */
+  gap: 2rem;
+  max-width: 800px;
+  width: 100%;
+}
+
+/* Item individual de contato */
+.contact-item {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);  /* Fundo semi-transparente */
+  border-radius: 12px;
+  backdrop-filter: blur(10px);   /* Efeito de blur no fundo */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Efeitos de hover nos itens de contato */
+.contact-item:hover {
+  transform: translateY(-5px);   /* Move 5px para cima */
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* Título do item de contato */
+.contact-item h3 {
+  font-family: var(--primary-font);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--bright-orange);
+}
+
+/* Texto do item de contato */
+.contact-item p {
+  font-family: var(--secondary-font);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .section-container {
+    padding: 0 1rem;             /* Padding menor em mobile */
+  }
+  
+  .section-title {
+    font-size: 2rem;             /* Títulos menores em mobile */
+  }
+  
+  .section-subtitle {
+    font-size: 1rem;             /* Subtítulos menores em mobile */
+  }
+  
+  .products-grid {
+    grid-template-columns: 1fr;  /* Uma coluna em mobile */
+    gap: 1.5rem;
+  }
+  
+  .product-card {
+    padding: 1.5rem;             /* Padding menor em mobile */
+  }
+  
+  .about-content {
+    flex-direction: column;      /* Empilhado em mobile */
+    gap: 2rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;  /* Uma coluna em mobile */
+    gap: 1.5rem;
+  }
+  
+  .contact-info {
+    grid-template-columns: 1fr;  /* Uma coluna em mobile */
+    gap: 1.5rem;
+  }
+  
+  .contact-item {
+    padding: 1.5rem;             /* Padding menor em mobile */
+  }
+}
+
+/* Breakpoint para telas muito pequenas */
+@media (max-width: 480px) {
+  .main-description {
+    font-size: 1.6rem;           /* Título principal menor */
+  }
+  
+  .main-subtext {
+    font-size: 0.95rem;          /* Subtítulo menor */
+  }
+  
+  .section-title {
+    font-size: 1.8rem;           /* Títulos de seção menores */
+  }
+  
+  .product-title {
+    font-size: 1.3rem;           /* Títulos de produtos menores */
+  }
+  
+  .stat-number {
+    font-size: 2rem;             /* Números de estatísticas menores */
+  }
+}
