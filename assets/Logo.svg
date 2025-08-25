@@ -1,0 +1,7 @@
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="60" height="60" rx="8" fill="#f6aa1c"/>
+  <path d="M15 20h30v20H15z" fill="none" stroke="#fff" stroke-width="2"/>
+  <circle cx="25" cy="28" r="3" fill="#fff"/>
+  <path d="M15 35l8-8 4 4 8-8 5 5v7H15z" fill="#fff"/>
+  <text x="30" y="52" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="8" font-weight="bold">PP</text>
+</svg>

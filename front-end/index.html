@@ -15,22 +15,23 @@
 
 <body>
   <header class="header">
-    <img src="assets/Logo.svg" alt="Logo Prime Photos" class="header-logo">
+    <img src="../assets/Logo.svg" alt="Logo Prime Photos" class="header-logo">
     <h1 class="header-title">Prime Photos</h1>
     <nav class="header-menu" aria-label="Menu principal">
       <ul class="header-list">
         <li class="menu-item"><a href="#inicio">Início</a></li>
         <li class="menu-item"><a href="#produtos">Produtos</a></li>
         <li class="menu-item"><a href="#sobre">Sobre</a></li>
+        <li class="menu-item"><a href="#equipe">Equipe</a></li>
         <li class="menu-item"><a href="#contato">Contato</a></li>
       </ul>
     </nav>
     <div class="header-buttons">
       <button type="button" aria-label="Abrir carrinho de compras">
-        <img src="/assets/Shopping Cart.svg" alt="Carrinho de compras" class="header-icon">
+        <img src="../assets/Shopping Cart.svg" alt="Carrinho de compras" class="header-icon">
       </button>
       <button type="button" aria-label="Fazer login">
-        <img src="/assets/Login.svg" alt="Login" class="header-icon">
+        <img src="../assets/Login.svg" alt="Login" class="header-icon">
       </button>
     </div>
   </header>
@@ -50,19 +51,23 @@
 
     <section id="produtos" class="products-section">
       <div class="section-container">
-        <h2 class="section-title">Nossos Produtos</h2>
+        <h2 class="section-title">Produtos</h2>
         <p class="section-subtitle">Descubra nossa coleção exclusiva de produtos fotográficos</p>
         <div class="products-grid">
           <div class="product-card">
             <div class="product-image">
-              <div class="image-placeholder"></div>
+              <div class="image-placeholder">
+                <img src="../assets/Polaroid.svg" alt="Polaroid">
+              </div>
             </div>
-            <h3 class="product-title">Fotos Polaroids</h3>
-            <p class="product-description">Impressões de alta qualidade em papel fotográfico premium</p>
+            <h3 class="product-title">Fotos Polaroid</h3>
+            <p class="product-description">Impressões de alta qualidade em papel fotográfico premium.</p>
           </div>
           <div class="product-card">
             <div class="product-image">
-              <div class="image-placeholder"></div>
+              <div class="image-placeholder">
+                <img src="../assets/Adesivos.svg" alt="Adesivos">
+              </div>
             </div>
             <h3 class="product-title">Adesivos</h3>
             <p class="product-description">Personalize notebooks, celulares e muito mais com adesivos exclusivos feitos a partir das suas fotos favoritas.</p>
@@ -73,13 +78,63 @@
 
     <section id="sobre" class="about-section">
       <div class="section-container">
-        <h2 class="section-title">Sobre Nós</h2>
+        <h2 class="section-title">Sobre</h2>
         <div class="about-content">
           <div class="about-text">
             <p class="about-description">
               A Prime Photos nasceu para resgatar o valor das memórias físicas em um mundo digital. Oferecemos polaroids com qualidade vintage e adesivos temáticos, transformando momentos especiais em lembranças tangíveis que você pode guardar, presentear ou colecionar. 
               Acreditamos que algumas histórias merecem ser vividas além das telas — e é isso que fazemos: revelamos emoções que você pode segurar nas mãos.<strong>Memórias reais para um mundo digital.</strong>
             </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="equipe" class="team-section">
+      <div class="section-container">
+        <h2 class="section-title">Equipe</h2>
+        <div class="team-grid">
+          <div class="team-member">
+            <div class="member-avatar">
+              <div class="avatar-placeholder">GH</div>
+            </div>
+            <h3 class="member-name">Gabriel Henrique Heleno</h3>
+            <p class="member-role">Marketing</p>
+          </div>
+          <div class="team-member">
+            <div class="member-avatar">
+              <div class="avatar-placeholder">HM</div>
+            </div>
+            <h3 class="member-name">Heitor Mesquita Galeli de Oliveira</h3>
+            <p class="member-role">Desenvolvedor Back-end</p>
+          </div>
+          <div class="team-member">
+            <div class="member-avatar">
+              <div class="avatar-placeholder">HF</div>
+            </div>
+            <h3 class="member-name">Henry Marques Fernandes Cruz</h3>
+            <p class="member-role">Desenvolvedor Back-end</p>
+          </div>
+          <div class="team-member">
+            <div class="member-avatar">
+              <div class="avatar-placeholder">RA</div>
+            </div>
+            <h3 class="member-name">Rafael Jandir Andem de Arruda</h3>
+            <p class="member-role">Marketing</p>
+          </div>
+          <div class="team-member">
+            <div class="member-avatar">
+              <div class="avatar-placeholder">RF</div>
+            </div>
+            <h3 class="member-name">Rafael Yohanan Farina</h3>
+            <p class="member-role">Banco de Dados</p>
+          </div>
+          <div class="team-member">
+            <div class="member-avatar">
+              <div class="avatar-placeholder">VF</div>
+            </div>
+            <h3 class="member-name">Vitor Rodrigues Ferreira</h3>
+            <p class="member-role">Desenvolvedor Front-end</p>
           </div>
         </div>
       </div>
@@ -110,6 +165,21 @@
       </div>
     </section>
   </main>
+
+  <footer>
+  <div class="custom-footer">
+    <div class="custom-footer-left">
+      <span class="custom-footer-logo">Prime Photos</span>
+      <a href="#" class="custom-footer-link">Contato</a>
+      <a href="#" class="custom-footer-link">Sobre</a>
+      <a href="#" class="custom-footer-link">Termos &amp; Privacidade</a>
+    </div>
+    <div class="custom-footer-right">
+      &copy; Copyright Prime Photos 2025
+    </div>
+  </div>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>

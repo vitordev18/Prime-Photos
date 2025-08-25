@@ -43,49 +43,61 @@ class ScrollAnimations {
     // Elementos do cabeçalho (logo, título, menu, botões)
     const headerElements = document.querySelectorAll('.header-logo, .header-title, .header-menu, .header-buttons');
     headerElements.forEach((el, index) => {
-      el.classList.add('scroll-animate', 'fade-in-down');
-      el.style.animationDelay = `${index * 0.1}s`; // Efeito escalonado
-      this.observer.observe(el);
+      if (el) {
+        el.classList.add('scroll-animate', 'fade-in-down');
+        el.style.animationDelay = `${index * 0.1}s`; // Efeito escalonado
+        this.observer.observe(el);
+      }
     });
 
     // Elementos da seção principal (título, subtítulo, botão CTA)
     const mainElements = document.querySelectorAll('.main-title, .main-subtext, .main-cta');
     mainElements.forEach((el, index) => {
-      el.classList.add('scroll-animate', 'fade-in-up');
-      el.style.animationDelay = `${index * 0.2}s`; // Delay maior para efeito dramático
-      this.observer.observe(el);
+      if (el) {
+        el.classList.add('scroll-animate', 'fade-in-up');
+        el.style.animationDelay = `${index * 0.2}s`; // Delay maior para efeito dramático
+        this.observer.observe(el);
+      }
     });
 
     // Adiciona efeito escalonado aos itens do menu
     const menuItems = document.querySelectorAll('.menu-item');
     menuItems.forEach((item, index) => {
-      item.classList.add('scroll-animate', 'fade-in-left');
-      item.style.animationDelay = `${index * 0.1}s`;
-      this.observer.observe(item);
+      if (item) {
+        item.classList.add('scroll-animate', 'fade-in-left');
+        item.style.animationDelay = `${index * 0.1}s`;
+        this.observer.observe(item);
+      }
     });
 
     // Animações das seções de produtos
     const sectionTitles = document.querySelectorAll('.section-title');
     sectionTitles.forEach((title, index) => {
-      title.classList.add('scroll-animate', 'fade-in-down');
-      title.style.animationDelay = `${index * 0.2}s`;
-      this.observer.observe(title);
+      if (title) {
+        title.classList.add('scroll-animate', 'fade-in-down');
+        title.style.animationDelay = `${index * 0.2}s`;
+        this.observer.observe(title);
+      }
     });
 
     // Subtítulos das seções
     const sectionSubtitles = document.querySelectorAll('.section-subtitle');
     sectionSubtitles.forEach((subtitle, index) => {
-      subtitle.classList.add('scroll-animate', 'fade-in-up');
-      subtitle.style.animationDelay = `${(index * 0.2) + 0.3}s`; // Delay adicional
-      this.observer.observe(subtitle);
+      if (subtitle) {
+        subtitle.classList.add('scroll-animate', 'fade-in-up');
+        subtitle.style.animationDelay = `${(index * 0.2) + 0.3}s`; // Delay adicional
+        this.observer.observe(subtitle);
+      }
     });
 
     // Animações dos cards de produtos
     const productCards = document.querySelectorAll('.product-card');
     productCards.forEach((card, index) => {
-      card.classList.add('scroll-animate', 'fade-in-up');
-      card.style.animationDelay = `${(index * 0.2) + 0.5}s`; // Delay maior para cards
-      this.observer.observe(card);
+      if (card) {
+        card.classList.add('scroll-animate', 'fade-in-up');
+        card.style.animationDelay = `${(index * 0.2) + 0.5}s`; // Delay maior para cards
+        this.observer.observe(card);
+      }
     });
 
     // Animações da seção sobre nós
@@ -96,26 +108,30 @@ class ScrollAnimations {
       this.observer.observe(aboutDescription);
     }
 
-    // Estatísticas com animação de escala
-    const statItems = document.querySelectorAll('.stat-item');
-    statItems.forEach((stat, index) => {
-      stat.classList.add('scroll-animate', 'scale-in');
-      stat.style.animationDelay = `${(index * 0.2) + 0.5}s`;
-      this.observer.observe(stat);
+    // Animações dos membros da equipe
+    const teamMembers = document.querySelectorAll('.team-member');
+    teamMembers.forEach((member, index) => {
+      if (member) {
+        member.classList.add('scroll-animate', 'fade-in-up');
+        member.style.animationDelay = `${(index * 0.15) + 0.3}s`;
+        this.observer.observe(member);
+      }
     });
 
     // Animações da seção de contato
     const contactItems = document.querySelectorAll('.contact-item');
     contactItems.forEach((item, index) => {
-      item.classList.add('scroll-animate', 'fade-in-up');
-      item.style.animationDelay = `${(index * 0.2) + 0.3}s`;
-      this.observer.observe(item);
+      if (item) {
+        item.classList.add('scroll-animate', 'fade-in-up');
+        item.style.animationDelay = `${(index * 0.2) + 0.3}s`;
+        this.observer.observe(item);
+      }
     });
 
     // Adiciona animações às próprias seções
     const sections = document.querySelectorAll('section');
     sections.forEach((section, index) => {
-      if (index > 0) { // Pula a primeira seção pois já está animada
+      if (section && index > 0) { // Pula a primeira seção pois já está animada
         section.classList.add('scroll-animate', 'fade-in-up');
         section.style.animationDelay = '0.2s';
         this.observer.observe(section);
@@ -165,21 +181,14 @@ class ParallaxEffect {
     const parallaxElements = document.querySelectorAll('.parallax');
     
     parallaxElements.forEach(element => {
-      const speed = element.dataset.speed || 0.5; // Velocidade do parallax
-      const yPos = -(scrolled * speed); // Calcula nova posição Y
-      element.style.transform = `translateY(${yPos}px)`; // Aplica transformação
+      if (element) {
+        const speed = element.dataset.speed || 0.5; // Velocidade do parallax
+        const yPos = -(scrolled * speed); // Calcula nova posição Y
+        element.style.transform = `translateY(${yPos}px)`; // Aplica transformação
+      }
     });
   }
 }
-
-// Inicializa animações quando o DOM estiver carregado
-document.addEventListener('DOMContentLoaded', () => {
-  new ScrollAnimations(); // Inicia sistema de animações
-  new ParallaxEffect(); // Inicia efeito parallax
-  
-  // Adiciona animação de carregamento
-  document.body.classList.add('loaded');
-});
 
 // Indicador de Progresso de Scroll
 // Mostra uma barra no topo indicando o progresso do scroll
@@ -216,7 +225,17 @@ class ScrollProgress {
   }
 }
 
-// Inicializa o indicador de progresso de scroll
+// Inicializa todas as funcionalidades quando o DOM estiver carregado
 document.addEventListener('DOMContentLoaded', () => {
+  // Adiciona animação de carregamento
+  document.body.classList.add('loaded');
+  
+  // Inicia sistema de animações
+  new ScrollAnimations();
+  
+  // Inicia efeito parallax
+  new ParallaxEffect();
+  
+  // Inicia o indicador de progresso de scroll
   new ScrollProgress();
 });
