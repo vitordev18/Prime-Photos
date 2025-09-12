@@ -1,0 +1,36 @@
+:root {
+  --deep-dark: #220901;
+  --bright-orange: #f6aa1c;
+  --strong-orange: #bc3908;
+  --dark-red: #621708;
+  --beige: #f5f5dc;
+  --white: #fff;
+  --light-gray: #e0e0e0;
+  --main-cta-hover-bg: #ffb84d;
+  --main-cta-hover-color: #222;
+  --menu-item-hover-bg: rgba(246, 170, 28, 0.12);
+  --header-button-hover-bg: rgba(246, 170, 28, 0.12);
+  --primary-font: 'Playfair Display', serif;
+  --secondary-font: 'Inter', sans-serif;
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 18px;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+  --shadow-xl: 0 12px 32px rgba(0,0,0,0.2);
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.6s ease;
+  --transition-bounce: 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --z-dropdown: 1000;
+  --z-header: 1001;
+  --z-progress: 9999;
+}
