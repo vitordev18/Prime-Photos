@@ -46,16 +46,11 @@ body {
   padding-left: 24px;
 }
 
-
 .header-logo {
-  width: 60px;
+  width: 110px;
   height: auto;
   transition: transform 0.3s ease;
   border-radius: 8px;
-}
-
-.header-logo:hover {
-  transform: scale(1.05);
 }
 
 .header-list {
