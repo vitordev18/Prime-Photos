@@ -20,11 +20,11 @@
 <body>
     <header class="header">
         <div class="header-left">
-            <img src="../assets/Logotipo/Logo PRIME PHOTOS (positivo).svg" alt="Logotipo Prime Photos" class="header-logo">
+            <img src="/assets/Logotipo/Logo PRIME PHOTOS (positivo).svg" alt="Logotipo Prime Photos" class="header-logo">
         </div>
         <div class="header-buttons">
-            <a href="../front-end/index.html" aria-label="Voltar para página principal" class="header-back-link">
-                <img src="../assets/Elementos/Back.svg" alt="Voltar para página principal" class="header-icon">
+            <a href="/front-end/index.html" aria-label="Voltar para página principal" class="header-back-link">
+                <img src="/assets/Elementos/Back.svg" alt="Voltar para página principal" class="header-icon">
             </a>
         </div>
     </header>
@@ -43,7 +43,7 @@
             <input type="password" name="senha" id="senha" class="login-input" required minlength="6">
 
             <button type="submit" class="login-submit">Cadastrar</button>
-            <button type="button" onclick="window.location.href='../front-end/login.html'" class="login-submit">Já tenho conta</button>
+            <button type="button" onclick="window.location.href='/front-end/login.html'" class="login-submit">Já tenho conta</button>
         </form>
     </main>
 </body>
