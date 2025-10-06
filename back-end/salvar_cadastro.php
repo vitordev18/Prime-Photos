@@ -1,6 +1,5 @@
 <?php
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome  = trim($_POST['nome']);
     $email = trim($_POST['email']);
@@ -12,9 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $dbname = "eq4.inf2";
         $user = "eq4.inf2";
         $password = "eq42675";
-        $params = "pgsql:host=$host;dbname=$dbname;user=$user;password=$password;port=54432";
+        $params = "pgsql:host=$host;
+                   dbname=$dbname;
+                   user=$user;
+                   password=$password;
+                   port=54432";
         $pdo = new PDO($params);
-        
         
         $sql = "SELECT id_usuario FROM usuario WHERE email = :email ";
         
@@ -41,12 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Erro no cadastrar do usuário.";
             }
         }
-  //  } catch (PDOException $e) {
-  //      error_log("Erro no cadastro: " . $e->getMessage());
-  //      echo "Erro do servidor!";
-  //  }
-
+  //} catch (PDOException $e) {
+  //    error_log("Erro no cadastro: " . $e->getMessage());
+  //    echo "Erro do servidor!";
+  //}
 }
-    
-    
 ?>

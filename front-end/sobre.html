@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sobre</title>
     <link rel="icon" type="image" href="/assets/Elementos/Camera COM FLASH.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="/front-end/styles/reset.css" />
     <link rel="stylesheet" href="/front-end/styles/style.css" />
     <link rel="stylesheet" href="/front-end/styles/media.css" />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
-      @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-    </style>
   </head>
 
   <body>
@@ -30,59 +32,55 @@
             class="header-icon"
           />
         </button>
-        <img
-          src="/assets/Logotipo/Logo PRIME PHOTOS (positivo).svg"
-          alt="Logotipo Prime Photos"
-          class="header-logo"
-        />
+        <a href="/index.html" aria-label="Voltar para a página principal Prime Photos">
+            <img
+                src="/assets/Logotipo/Logo PRIME PHOTOS (positivo).svg"
+                alt="Logotipo Prime Photos"
+                class="header-logo"
+            />
+        </a>
       </div>
       <nav
         class="header-menu-dropdown"
         id="header-menu-dropdown"
-        aria-label="Menu principal"
-        role="menu"
+        aria-label="Menu principal de navegação"
       >
         <ul class="header-list">
-          <li class="menu-item" role="none">
+          <li class="menu-item">
             <a
-              href="#inicio"
-              role="menuitem"
+              href="/index.html#inicio"
               aria-label="Início"
               class="menu-link"
               >Início</a
             >
           </li>
-          <li class="menu-item" role="none">
+          <li class="menu-item">
             <a
-              href="#produtos"
-              role="menuitem"
+              href="/index.html#produtos"
               aria-label="Produtos"
               class="menu-link"
               >Produtos</a
             >
           </li>
-          <li class="menu-item" role="none">
+          <li class="menu-item">
             <a
               href="#sobre"
-              role="menuitem"
               aria-label="Sobre"
               class="menu-link"
               >Sobre</a
             >
           </li>
-          <li class="menu-item" role="none">
+          <li class="menu-item">
             <a
               href="#equipe"
-              role="menuitem"
               aria-label="Equipe"
               class="menu-link"
               >Equipe</a
             >
           </li>
-          <li class="menu-item" role="none">
+          <li class="menu-item">
             <a
-              href="#contato"
-              role="menuitem"
+              href="/index.html#contato"
               aria-label="Contato"
               class="menu-link"
               >Contato</a
@@ -92,79 +90,81 @@
       </nav>
       <div class="header-buttons">
           <a href="/index.html" aria-label="Voltar para página principal" class="header-back-link">
-              <img src="/assets/Elementos/Back.svg" alt="Voltar para página principal" class="header-icon">
+              <img src="/assets/Elementos/Back.svg" alt="" class="header-icon">
           </a>
       </div>
     </header>
 
-    <section id="sobre" class="about-section">
-      <div class="section-container">
-        <h2 class="section-title">Sobre</h2>
-        <div class="about-content">
-          <div class="about-text">
-            <p class="about-description">
-              A Prime Photos nasceu para resgatar o valor das memórias físicas em um mundo
-              digital. Oferecemos polaroids com qualidade vintage e adesivos temáticos,
-              transformando momentos especiais em lembranças tangíveis que você pode guardar,
-              presentear ou colecionar. Acreditamos que algumas histórias merecem ser vividas
-              além das telas — e é isso que fazemos: revelamos emoções que você pode segurar
-              nas mãos.<strong> Memórias reais para um mundo digital.</strong>
-            </p>
+    <main>
+      <section id="sobre" class="about-section">
+        <div class="section-container">
+          <h1 class="section-title">Sobre</h1>
+          <div class="about-content">
+            <div class="about-text">
+              <p class="about-description">
+                A Prime Photos nasceu para resgatar o valor das memórias físicas em um mundo
+                digital. Oferecemos polaroids com qualidade vintage e adesivos temáticos,
+                transformando momentos especiais em lembranças tangíveis que você pode guardar,
+                presentear ou colecionar. Acreditamos que algumas histórias merecem ser vividas
+                além das telas — e é isso que fazemos: revelamos emoções que você pode segurar
+                nas mãos.<strong> Memórias reais para um mundo digital.</strong>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="equipe" class="team-section">
-      <div class="section-container">
-        <h2 class="section-title">Equipe</h2>
-        <div class="team-grid">
-          <div class="team-member">
-            <div class="member-avatar">
-              <div class="avatar-placeholder">GH</div>
-            </div>
-            <h3 class="member-name">Gabriel Henrique Heleno</h3>
-            <p class="member-role">Marketing</p>
-          </div>
-          <div class="team-member">
-            <div class="member-avatar">
-              <div class="avatar-placeholder">HM</div>
-            </div>
-            <h3 class="member-name">Heitor Mesquita Galeli de Oliveira</h3>
-            <p class="member-role">Desenvolvedor Back-end</p>
-          </div>
-          <div class="team-member">
-            <div class="member-avatar">
-              <div class="avatar-placeholder">HF</div>
-            </div>
-            <h3 class="member-name">Henry Marques Fernandes Cruz</h3>
-            <p class="member-role">Desenvolvedor Back-end</p>
-          </div>
-          <div class="team-member">
-            <div class="member-avatar">
-              <div class="avatar-placeholder">RA</div>
-            </div>
-            <h3 class="member-name">Rafael Jandir Andem de Arruda</h3>
-            <p class="member-role">Marketing</p>
-          </div>
-          <div class="team-member">
-            <div class="member-avatar">
-              <div class="avatar-placeholder">RF</div>
-            </div>
-            <h3 class="member-name">Rafael Yohanan Farina</h3>
-            <p class="member-role">Banco de Dados</p>
-          </div>
-          <div class="team-member">
-            <div class="member-avatar">
-              <div class="avatar-placeholder">VR</div>
-            </div>
-            <h3 class="member-name">Vitor Rodrigues Ferreira</h3>
-            <p class="member-role">Desenvolvedor front-end</p>
-          </div>
+      <section id="equipe" class="team-section">
+        <div class="section-container">
+          <h2 class="section-title">Equipe</h2>
+          <ul class="team-grid">
+            <li class="team-member">
+              <div class="member-avatar">
+                <div class="avatar-placeholder">GH</div>
+              </div>
+              <h3 class="member-name">Gabriel Henrique Heleno</h3>
+              <p class="member-role">Marketing</p>
+            </li>
+            <li class="team-member">
+              <div class="member-avatar">
+                <div class="avatar-placeholder">HM</div>
+              </div>
+              <h3 class="member-name">Heitor Mesquita Galeli de Oliveira</h3>
+              <p class="member-role">Desenvolvedor Back-end</p>
+            </li>
+            <li class="team-member">
+              <div class="member-avatar">
+                <div class="avatar-placeholder">HF</div>
+              </div>
+              <h3 class="member-name">Henry Marques Fernandes Cruz</h3>
+              <p class="member-role">Desenvolvedor Back-end</p>
+            </li>
+            <li class="team-member">
+              <div class="member-avatar">
+                <div class="avatar-placeholder">RA</div>
+              </div>
+              <h3 class="member-name">Rafael Jandir Andem de Arruda</h3>
+              <p class="member-role">Marketing</p>
+            </li>
+            <li class="team-member">
+              <div class="member-avatar">
+                <div class="avatar-placeholder">RF</div>
+              </div>
+              <h3 class="member-name">Rafael Yohanan Farina</h3>
+              <p class="member-role">Banco de Dados</p>
+            </li>
+            <li class="team-member">
+              <div class="member-avatar">
+                <div class="avatar-placeholder">VR</div>
+              </div>
+              <h3 class="member-name">Vitor Rodrigues Ferreira</h3>
+              <p class="member-role">Desenvolvedor front-end</p>
+            </li>
+          </ul>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
+
+    <script src="/front-end/script.js"></script>
   </body>
-
-  <script src="/front-end/script.js"></script>
 </html>

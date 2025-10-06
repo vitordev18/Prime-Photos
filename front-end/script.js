@@ -1,3 +1,21 @@
+// Função auxiliar para usar requestAnimationFrame (rAF) com segurança
+function safeRAF(callback) {
+  let isTicking = false;
+  let lastScrollY = window.pageYOffset;
+
+  window.addEventListener('scroll', () => {
+    lastScrollY = window.pageYOffset;
+    if (!isTicking) {
+      requestAnimationFrame(() => {
+        callback(lastScrollY);
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  });
+  callback(lastScrollY);
+}
+
 // Gerencia animações baseadas em scroll usando Intersection Observer
 class ScrollAnimations {
   constructor() {
@@ -15,7 +33,7 @@ class ScrollAnimations {
   // Configura Intersection Observer para detectar elementos na viewport
   setupObserver() {
     const options = {
-      threshold: 0.1,
+      threshold: 0.2,
       rootMargin: "0px 0px -50px 0px",
     };
 
@@ -85,7 +103,7 @@ class ScrollAnimations {
     });
   }
 
-  // Configura scroll suave para links âncora (exceto links do menu, que já tratam isso no MenuManager)
+  // Configura scroll suave para links âncora
   setupSmoothScroll() {
     const navLinks = document.querySelectorAll('a[href^="#"]:not(.menu-link)');
 
@@ -101,7 +119,6 @@ class ScrollAnimations {
             block: "start",
           });
         }
-        // Se não existir, não faz preventDefault, deixa o link agir normalmente
       });
     });
   }
@@ -114,66 +131,68 @@ class ParallaxEffect {
   }
 
   init() {
-    window.addEventListener("scroll", () => {
-      this.updateParallax();
-    });
+    // Usando rAF para melhor performance no scroll
+    safeRAF(this.updateParallax.bind(this));
   }
 
   // Atualiza posições dos elementos parallax
-  updateParallax() {
-    const scrolled = window.pageYOffset;
+  updateParallax(scrolled) {
     const parallaxElements = document.querySelectorAll(".parallax");
 
     parallaxElements.forEach((element) => {
       if (element) {
         const speed = element.dataset.speed || 0.5;
-        const yPos = -(scrolled * speed);
+        // Se scrolled não for passado, pega o valor atual
+        const currentScroll = scrolled !== undefined ? scrolled : window.pageYOffset;
+        const yPos = -(currentScroll * speed);
         element.style.transform = `translateY(${yPos}px)`;
       }
     });
   }
 }
 
-// Exibe barra de progresso do scroll no topo
+// Exibe barra de progresso do scroll no topo do site
 class ScrollProgress {
   constructor() {
-    this.createProgressBar();
+    this.progressBar = null;
     this.init();
   }
 
   // Cria elemento da barra de progresso
   createProgressBar() {
-    const progressBar = document.createElement("div");
-    progressBar.className = "scroll-progress";
-    document.body.appendChild(progressBar);
+    this.progressBar = document.createElement("div");
+    this.progressBar.className = "scroll-progress";
+    document.body.appendChild(this.progressBar);
   }
 
   init() {
-    window.addEventListener("scroll", () => {
-      this.updateProgress();
-    });
+    this.createProgressBar();
+    // Usando rAF para melhor performance no scroll
+    safeRAF(this.updateProgress.bind(this));
   }
 
   // Atualiza largura da barra baseada no scroll
-  updateProgress() {
-    const scrollTop = window.pageYOffset;
+  updateProgress(scrollTop) {
+    if (!this.progressBar) return;
+
+    // Se scrollTop não for passado, pega o valor atual
+    const currentScrollTop = scrollTop !== undefined ? scrollTop : window.pageYOffset;
+
     const docHeight =
       document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = (scrollTop / docHeight) * 100;
+    const scrollPercent = (currentScrollTop / docHeight) * 100;
 
-    const progressBar = document.querySelector(".scroll-progress");
-    if (progressBar) {
-      progressBar.style.width = `${scrollPercent}%`;
-    }
+    this.progressBar.style.width = `${scrollPercent}%`;
   }
 }
 
-// Gerencia funcionalidade do menu dropdown - VERSÃO CORRIGIDA
+// Gerencia funcionalidade do menu dropdown
 class MenuManager {
   constructor() {
     this.menuToggleBtn = null;
     this.menuDropdown = null;
     this.overlay = null;
+    this.menuItems = null;
     this.isMenuOpen = false;
     this.init();
   }
@@ -182,11 +201,15 @@ class MenuManager {
     this.menuToggleBtn = document.getElementById("menu-toggle-btn");
     this.menuDropdown = document.getElementById("header-menu-dropdown");
 
-    if (this.menuToggleBtn && this.menuDropdown) {
-      this.createOverlay();
-      this.setupEventListeners();
-      this.setupMenuCloseOnClick();
+    if (!this.menuToggleBtn || !this.menuDropdown) {
+      console.error("Elementos do menu não encontrados");
+      return;
     }
+
+    this.menuItems = this.menuDropdown.querySelectorAll(".menu-link");
+    this.createOverlay();
+    this.setupEventListeners();
+    this.setupMenuCloseOnClick();
   }
 
   // Cria overlay para fechar menu
@@ -198,11 +221,6 @@ class MenuManager {
 
   // Alterna visibilidade do menu
   toggleMenuDropdown() {
-    if (!this.menuToggleBtn || !this.menuDropdown) {
-      console.error("Elementos do menu não encontrados");
-      return;
-    }
-
     if (this.isMenuOpen) {
       this.closeMenu();
     } else {
@@ -214,74 +232,82 @@ class MenuManager {
   openMenu() {
     this.isMenuOpen = true;
     this.menuDropdown.classList.add("menu-open");
-    this.overlay.classList.add("active");
+    this.menuDropdown.style.display = "block";
+
+    if (this.overlay) {
+      this.overlay.classList.add("active");
+    }
+
     this.menuToggleBtn.setAttribute("aria-expanded", "true");
     this.menuToggleBtn.setAttribute("aria-label", "Fechar Menu");
     document.body.style.overflow = "hidden";
 
     // Anima os itens do menu
-    const menuItems = this.menuDropdown.querySelectorAll(".menu-item");
-    menuItems.forEach((item, index) => {
+    // Link interno (#)
+    if (targetHref && targetHref.startsWith("#")) {
+      e.preventDefault();
       setTimeout(() => {
-        item.classList.add("animate-in");
-      }, index * 100);
-    });
+      const targetEl = document.querySelector(targetHref);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      }, 400);
+    }
   }
 
   // Fecha o menu
   closeMenu() {
     this.isMenuOpen = false;
     this.menuDropdown.classList.remove("menu-open");
-    this.overlay.classList.remove("active");
+
+    if (this.overlay) {
+      this.overlay.classList.remove("active");
+    }
+
     this.menuToggleBtn.setAttribute("aria-expanded", "false");
     this.menuToggleBtn.setAttribute("aria-label", "Abrir Menu");
     document.body.style.overflow = "";
 
     // Remove animação dos itens
-    const menuItems = this.menuDropdown.querySelectorAll(".menu-item");
-    menuItems.forEach((item) => {
-      item.classList.remove("animate-in");
-    });
+    if (this.menuItems && this.menuItems.length > 0) {
+      this.menuItems.forEach((item) => {
+        const listItem = item.closest(".menu-item");
+        if (listItem) {
+          listItem.classList.remove("animate-in");
+        }
+      });
+    }
+
+    // Aguarda animação CSS antes de esconder
+    setTimeout(() => {
+      if (!this.isMenuOpen) {
+        this.menuDropdown.style.display = "none";
+      }
+    }, 300);
   }
 
   // Configura fechamento do menu ao clicar em itens
   setupMenuCloseOnClick() {
-    const menuItems = document.querySelectorAll(
-      ".header-menu-dropdown .menu-item a"
-    );
-    menuItems.forEach((item) => {
+    if (!this.menuItems || this.menuItems.length === 0) return;
+
+    this.menuItems.forEach((item) => {
       item.addEventListener("click", (e) => {
-        const targetId = item.getAttribute("href");
-        if (targetId && targetId.startsWith("#")) {
-          const targetElement = document.querySelector(targetId);
-          if (targetElement) {
-            e.preventDefault();
-            // Fecha o menu imediatamente (mas mantém o body travado)
-            this.menuDropdown.classList.remove("menu-open");
-            this.overlay.classList.remove("active");
-            this.menuToggleBtn.setAttribute("aria-expanded", "false");
-            this.menuToggleBtn.setAttribute("aria-label", "Abrir Menu");
-            // Scroll suave
-            targetElement.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-            // Só libera o scroll do body após o scroll
-            setTimeout(() => {
-              document.body.style.overflow = "";
-              // Remove animação dos itens
-              const menuItems =
-                this.menuDropdown.querySelectorAll(".menu-item");
-              menuItems.forEach((item) => {
-                item.classList.remove("animate-in");
-              });
-              this.isMenuOpen = false;
-            }, 600);
-          }
-        } else {
-          // Se não for âncora, fecha normalmente (ex: links externos)
-          this.closeMenu();
+        const targetHref = item.getAttribute("href");
+
+        // Fecha o menu imediatamente
+        this.closeMenu();
+
+        // Link interno (#)
+        if (targetHref && targetHref.startsWith("#")) {
+          e.preventDefault();
+          setTimeout(() => {
+            const targetEl = document.querySelector(targetHref);
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }, 300);
         }
+        // Link externo será tratado naturalmente pelo navegador
       });
     });
   }
@@ -296,22 +322,17 @@ class MenuManager {
     });
 
     // Click no overlay
-    this.overlay.addEventListener("click", () => {
-      this.closeMenu();
-    });
+    if (this.overlay) {
+      this.overlay.addEventListener("click", () => {
+        this.closeMenu();
+      });
+    }
 
     // Tecla Escape
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && this.isMenuOpen) {
         this.closeMenu();
         this.menuToggleBtn.focus();
-      }
-    });
-
-    // Fecha menu ao rolar
-    window.addEventListener("scroll", () => {
-      if (this.isMenuOpen) {
-        this.closeMenu();
       }
     });
 
@@ -331,9 +352,5 @@ document.addEventListener("DOMContentLoaded", () => {
   new ScrollAnimations();
   new ParallaxEffect();
   new ScrollProgress();
-
-  // Inicializa o menu manager
-  window.menuManager = new MenuManager();
-
-  console.log("Prime Photos - Sistemas inicializados");
+  new MenuManager();
 });

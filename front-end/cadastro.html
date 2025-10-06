@@ -4,28 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cadastro</title>
-    <link
-      rel="icon"
-      type="image"
-      href="/assets/Elementos/Camera COM FLASH.svg"
-    />
+    <link rel="icon" type="image" href="/assets/Elementos/Camera COM FLASH.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="/front-end/styles/reset.css" />
-    <link rel="stylesheet" href="/front-end/styles/cadastro.css" />
+    <link rel="stylesheet" href="/front-end/styles/form.css" />
     <link rel="stylesheet" href="/front-end/styles/media.css" />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
-      @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-    </style>
   </head>
 
 <body>
     <header class="header">
         <div class="header-left">
-            <img src="/assets/Logotipo/Logo PRIME PHOTOS (positivo).svg" alt="Logotipo Prime Photos" class="header-logo">
+            <a href="/index.html" aria-label="Voltar para a página principal Prime Photos">
+              <img src="/assets/Logotipo/Logo PRIME PHOTOS (positivo).svg" alt="Logotipo Prime Photos" class="header-logo">
+            </a>
         </div>
         <div class="header-buttons">
-            <a href="/front-end/login.html" aria-label="Voltar para página principal" class="header-back-link">
-                <img src="/assets/Elementos/Back.svg" alt="Voltar para página principal" class="header-icon">
+            <a href="/front-end/login.html" aria-label="Voltar para a página de Login" class="header-back-link">
+                <img src="/assets/Elementos/Back.svg" alt="" class="header-icon">
             </a>
         </div>
     </header>
@@ -41,7 +41,7 @@
             <input type="email" name="email" id="email" class="login-input" required>
 
             <label for="telefone" class="login-label">Telefone:</label>
-            <input type="telefone" name="telefone" id="telefone" class="login-input" required>
+            <input type="tel" name="telefone" id="telefone" class="login-input" required>
 
             <label for="senha" class="login-label">Senha:</label>
             <input type="password" name="senha" id="senha" class="login-input" required>
