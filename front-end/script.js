@@ -229,7 +229,7 @@ class MenuManager {
   }
 
   // Abre o menu
-  openMenu() {
+  openMenu(targetHref) {
     this.isMenuOpen = true;
     this.menuDropdown.classList.add("menu-open");
     this.menuDropdown.style.display = "block";
@@ -256,7 +256,7 @@ class MenuManager {
   }
 
   // Fecha o menu
-  closeMenu() {
+  closeMenu(targetHref) {
     this.isMenuOpen = false;
     this.menuDropdown.classList.remove("menu-open");
 
