@@ -144,7 +144,7 @@ body {
   min-height: calc(100vh - 80px);
 }
 
-.login-form {
+.login-form { 
   background: var(--white);
   border-radius: 20px;
   box-shadow: 0 10px 40px rgba(98, 23, 8, 0.15),
@@ -213,6 +213,17 @@ body {
   letter-spacing: 0.02em;
   margin-bottom: 0.5rem;
 }
+
+.login-forget-password {
+  text-align: center;
+  display: inline-block;
+  font-family: var(--secondary-font);
+  color: var(--dark-red);
+  font-size: 0.9rem;
+  font-weigth: 200;
+  text-aling: center;
+  text-decoration: underline;
+} 
 
 .login-input {
   padding: 14px 16px;
