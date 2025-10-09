@@ -17,20 +17,42 @@
   </head>
 
   <body>
+    <nav class="main-menu-overlay" id="main-menu-overlay" aria-label="Menu principal de navegação">
+        <button id="menu-close-btn" class="menu-close-btn" aria-label="Fechar menu de navegação">
+            &times; 
+        </button>
+        <div class="menu-content">
+            <img src="/assets/Logotipo/Logo PRIME PHOTOS (positivo).svg" alt="Logotipo Prime Photos" class="menu-logo" />
+            <ul class="menu-list">
+                <li class="menu-item-link">
+                    <a href="/index.html#inicio" class="menu-link-item">Início</a>
+                </li>
+                <li class="menu-item-link">
+                    <a href="/index.html#produtos" class="menu-link-item">Produtos</a>
+                </li>
+                <li class="menu-item-link">
+                    <a href="#sobre" class="menu-link-item">Sobre</a>
+                </li>
+                <li class="menu-item-link">
+                    <a href="#equipe" class="menu-link-item">Equipe</a>
+                </li>
+                <li class="menu-item-action">
+                    <a href="/front-end/login.html" class="menu-action-link login-btn">Fazer Login</a>
+                </li>
+                <li class="menu-item-action">
+                    <a href="/front-end/carrinho.html" class="menu-action-link cart-btn">Carrinho de Compras</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
     <header class="header">
       <div class="header-left">
         <button
-          aria-label="Abrir Menu"
-          aria-haspopup="true"
-          aria-expanded="false"
-          id="menu-toggle-btn"
+          id="menu-open-btn"
           type="button"
-        >
-          <img
-            src="/assets/Elementos/Menu.svg"
-            alt="Abrir menu expansivo"
-            class="header-icon"
-          />
+          aria-label="Abrir menu expansivo">
+          <img src="/assets/Elementos/Menu.svg" alt="Ícone de menu" class="header-icon" />
         </button>
         <a href="/index.html" aria-label="Voltar para a página principal Prime Photos">
             <img
@@ -40,57 +62,10 @@
             />
         </a>
       </div>
-      <nav
-        class="header-menu-dropdown"
-        id="header-menu-dropdown"
-        aria-label="Menu principal de navegação"
-      >
-        <ul class="header-list">
-          <li class="menu-item">
-            <a
-              href="/index.html#inicio"
-              aria-label="Início"
-              class="menu-link"
-              >Início</a
-            >
-          </li>
-          <li class="menu-item">
-            <a
-              href="/index.html#produtos"
-              aria-label="Produtos"
-              class="menu-link"
-              >Produtos</a
-            >
-          </li>
-          <li class="menu-item">
-            <a
-              href="#sobre"
-              aria-label="Sobre"
-              class="menu-link"
-              >Sobre</a
-            >
-          </li>
-          <li class="menu-item">
-            <a
-              href="#equipe"
-              aria-label="Equipe"
-              class="menu-link"
-              >Equipe</a
-            >
-          </li>
-          <li class="menu-item">
-            <a
-              href="/index.html#contato"
-              aria-label="Contato"
-              class="menu-link"
-              >Contato</a
-            >
-          </li>
-        </ul>
-      </nav>
+      
       <div class="header-buttons">
           <a href="/index.html" aria-label="Voltar para página principal" class="header-back-link">
-              <img src="/assets/Elementos/Back.svg" alt="" class="header-icon">
+              <img src="/assets/Elementos/Back.svg" alt="Ícone de seta para voltar" class="header-icon">
           </a>
       </div>
     </header>

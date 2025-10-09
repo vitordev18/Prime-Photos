@@ -16,52 +16,59 @@
     <link rel="stylesheet" href="/front-end/styles/media.css" />
   </head>
 
-  <body>
+<body>
+    <nav class="main-menu-overlay" id="main-menu-overlay" aria-label="Menu principal de navegação">
+        <button id="menu-close-btn" class="menu-close-btn" aria-label="Fechar menu de navegação">
+            &times; 
+        </button>
+        <div class="menu-content">
+            <img src="/assets/Logotipo/Logo PRIME PHOTOS (positivo).svg" alt="Logotipo Prime Photos" class="menu-logo" />
+            <ul class="menu-list">
+                <li class="menu-item-link">
+                    <a href="#inicio" class="menu-link-item">Início</a>
+                </li>
+                <li class="menu-item-link">
+                    <a href="#produtos" class="menu-link-item">Produtos</a>
+                </li>
+                <li class="menu-item-link">
+                    <a href="/front-end/sobre.html" class="menu-link-item">Sobre</a>
+                </li>
+                <li class="menu-item-link">
+                    <a href="/front-end/sobre.html/#equipe" class="menu-link-item">Equipe</a>
+                </li>
+                <li class="menu-item-action">
+                    <a href="/front-end/login.html" class="menu-action-link login-btn">Fazer Login</a>
+                </li>
+                <li class="menu-item-action">
+                    <a href="/front-end/carrinho.html" class="menu-action-link cart-btn">Carrinho de Compras</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
     <header class="header">
       <div class="header-left">
         <button
-          id="menu-toggle-btn"
-          type="button">
-          <img src="/assets/Elementos/Menu.svg" alt="Abrir menu expansivo" class="header-icon" />
+          id="menu-open-btn"
+          type="button"
+          aria-label="Abrir menu expansivo">
+          <img src="/assets/Elementos/Menu.svg" alt="Ícone de menu" class="header-icon" />
         </button>
-        <img src="/assets/Logotipo/Logo PRIME PHOTOS (positivo).svg" alt="Logotipo Prime Photos" class="header-logo" />
+        <a href="/index.html" aria-label="Voltar para a página principal Prime Photos">
+            <img
+                src="/assets/Logotipo/Logo PRIME PHOTOS (positivo).svg"
+                alt="Logotipo Prime Photos"
+                class="header-logo"
+            />
+        </a>
       </div>
-      
-      <nav class="header-menu-dropdown" id="header-menu-dropdown" aria-label="Menu principal de navegação">
-        <ul class="header-list">
-          <li class="menu-item">
-            <a
-              id="inicio"
-              href="#inicio"
-              aria-label="Início"
-              class="menu-link"
-              >Inicio</a>
-          </li>
-          <li class="menu-item">
-            <a
-              id="produtos"
-              href="#produtos"
-              aria-label="Produtos"
-              class="menu-link"
-              >Produtos</a>
-          </li>
-          <li class="menu-item">
-            <a
-              id="sobre"
-              href="/front-end/sobre.html"
-              aria-label="Sobre"
-              class="menu-link"
-              >Sobre</a>
-          </li>
-        </ul>
-      </nav>
 
       <div class="header-buttons">
         <a
           href="/front-end/carrinho.html"
           aria-label="Abrir carrinho de compras"
           class="header-cart-btn">
-          <img src="/assets/Elementos/Carrinho de Compra.svg" alt="Ícone Carrinho de compras" class="header-icon" />
+          <img src="/assets/Elementos/Carrinho de Compra.svg" alt="ícone Carrinho de compras" class="header-icon" />
         </a>
         <a
           href="/front-end/login.html"
@@ -102,12 +109,12 @@
                   Impressões de alta qualidade em papel fotográfico premium.
                 </p>
                 <p class="product-value">R$ 00,00</p>
-                <div class="product-quantity">
-                  <button class="quantity-button" aria-label="Adicionar item ao carrinho">
+                <div class="product-quantity" aria-controls="polaroid-qty">
+                  <button class="quantity-button add-item" aria-label="Adicionar item Fotos Polaroid ao carrinho">
                     <img src="/assets/Elementos/Plus.svg" alt="" />
                   </button>
-                  <span class="quantity-number">0</span>
-                  <button class="quantity-button" aria-label="Remover item do carrinho">
+                  <span class="quantity-number" id="polaroid-qty">0</span>
+                  <button class="quantity-button remove-item" aria-label="Remover item Fotos Polaroid do carrinho">
                     <img src="/assets/Elementos/Minus.svg" alt="" />
                   </button>
                 </div>
@@ -129,12 +136,12 @@
                   Personalize notebooks, celulares com adesivos exclusivos.
                 </p>
                 <p class="product-value">R$ 00,00</p>
-                <div class="product-quantity">
-                  <button class="quantity-button" aria-label="Adicionar item ao carrinho">
+                <div class="product-quantity" aria-controls="adesivos-qty">
+                  <button class="quantity-button add-item" aria-label="Adicionar item Adesivos ao carrinho">
                     <img src="/assets/Elementos/Plus.svg" alt="" />
                   </button>
-                  <span class="quantity-number">0</span>
-                  <button class="quantity-button" aria-label="Remover item do carrinho">
+                  <span class="quantity-number" id="adesivos-qty">0</span>
+                  <button class="quantity-button remove-item" aria-label="Remover item Adesivos do carrinho">
                     <img src="/assets/Elementos/Minus.svg" alt="" />
                   </button>
                 </div>
@@ -152,7 +159,7 @@
         </div>
         <div class="footer-links-group">
           <div class="footer-social-icons">
-            <h4>Redes Sociais</h4>
+            <span class="footer-heading">Redes Sociais</span>
             <ul>
               <li>
                 <a href="https://www.instagram.com/primephotos_00/" target="_blank" aria-label="Instagram">
@@ -162,7 +169,7 @@
             </ul>
           </div>
           <div>
-            <h4>Empresa</h4>
+            <span class="footer-heading">Empresa</span>
             <ul>
               <li>
                 <a href="/front-end/sobre.html">Sobre</a>
@@ -170,7 +177,7 @@
             </ul>
           </div>
           <div>
-            <h4>Endereço</h4>
+            <span class="footer-heading">Endereço</span>
             <ul>
               <li>
                 <address>Av. Nações Unidas, 58-50 - Bauru, SP</address>

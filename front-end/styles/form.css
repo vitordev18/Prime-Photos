@@ -64,7 +64,7 @@ body {
   padding: 10px;
   cursor: pointer;
   border-radius: 50%;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition: background-color 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,7 +74,6 @@ body {
 .header-buttons a:hover,
 .header-buttons a:focus {
   background-color: var(--header-button-hover-bg);
-  transform: scale(1.05);
 }
 
 .header-icon {
@@ -94,7 +93,6 @@ body {
 .login-form {
   background: var(--white);
   border-radius: 20px;
-  /* Sombra mais suave e elegante */
   box-shadow: 0 15px 50px rgba(34, 9, 1, 0.1),
     0 5px 15px rgba(246, 170, 28, 0.1);
   padding: 3.5rem 2.5rem;

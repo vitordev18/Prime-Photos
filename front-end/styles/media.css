@@ -1,133 +1,98 @@
-/* GERAL */
-@media (max-width: 1200px) {
+/* SMALL MOBILE ADJUSTMENTS (min-width: 420px) */
+@media (min-width: 420px) {
+  /* Formulários */
+  .login-form {
+    padding: 3rem 2rem;
+  }
+  
+  /* Footer */
+  .footer-bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+/* TABLETS / SMALL DESKTOPS (min-width: 768px) */
+@media (min-width: 768px) {
+  /* GERAL / SEÇÕES */
   .section-container,
   .footer-content {
+    padding: 0 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 3rem; /* Título maior */
+  }
+
+  /* LAYOUT DE GRADES */
+  .products-grid,
+  .team-grid {
+    grid-template-columns: 1fr 1fr; /* 2 colunas */
+    gap: 3rem 2rem;
+  }
+
+  /* MENU LATERAL */
+  .main-menu-overlay {
+      width: 350px;
+  }
+
+  .menu-item-link a {
+      font-size: 2.5rem; /* Fonte maior para links do menu */
+  }
+
+  /* FOOTER */
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .footer-links-group {
+    flex-direction: row; /* Colunas no footer */
+    gap: 2rem;
+  }
+
+  /* SOBRE */
+  .about-section {
+    padding: 8rem 2rem;
+  }
+  
+  .about-content {
+    text-align: left;
+  }
+}
+
+/* LARGE TABLETS / MEDIUM DESKTOPS (min-width: 992px) */
+@media (min-width: 992px) {
+  .products-grid {
+    grid-template-columns: 1fr 1fr 1fr; /* 3 colunas */
+  }
+  
+  .team-grid {
+    grid-template-columns: 1fr 1fr 1fr; /* 3 colunas */
+  }
+
+  .section-container {
     max-width: 1000px;
-    padding: 0 1rem;
   }
+  
+  /* Footer */
   .footer-links-group {
-    margin-left: 0;
-    gap: 2rem;
+    gap: 4rem;
   }
 }
 
-@media (max-width: 900px) {
-  .products-grid,
+/* DESKTOPS LARGE (min-width: 1200px) */
+@media (min-width: 1200px) {
+  .section-container {
+    max-width: 1200px;
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Mantém a grid flexível ou 4 colunas */
+  }
+  
   .team-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.2rem;
-  }
-  .footer-content {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2rem;
-  }
-  .footer-links-group {
-    flex-direction: column;
-    gap: 1.2rem;
-    margin-left: 0;
-  }
-}
-
-@media (max-width: 700px) {
-  .main-section {
-    padding: 2rem 0.5rem 1.5rem 0.5rem;
-    min-height: 40vh;
-  }
-  .main-description {
-    font-size: 1.5rem;
-  }
-  .section-title {
-    font-size: 1.7rem;
-  }
-  .products-grid,
-  .team-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  .product-image {
-    height: 140px;
-  }
-  .member-avatar {
-    width: 60px;
-    height: 60px;
-  }
-  .footer-content {
-    padding: 1.5rem 1rem 1rem 1rem;
-  }
-  .footer-logo {
-    width: 100px;
-  }
-  .footer-links-group h4 {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 500px) {
-  .main-section {
-    padding: 1rem 0.2rem 1rem 0.2rem;
-  }
-  .main-description {
-    font-size: 1.1rem;
-  }
-  .section-title {
-    font-size: 1.2rem;
-  }
-  .about-description,
-  .main-subtext,
-  .section-subtitle {
-    font-size: 0.95rem;
-    padding: 0 0.2rem;
-  }
-  .footer-content {
-    padding: 1rem 0.5rem 0.5rem 0.5rem;
-    gap: 1rem;
-  }
-  .footer-logo {
-    width: 70px;
-  }
-  .footer-bottom {
-    flex-direction: column;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    padding: 0.7rem 0.5rem;
-    text-align: center;
-  }
-}
-
-/* Ajuste para menu mobile */
-@media (max-width: 700px) {
-  .header-menu-dropdown {
-    width: 85vw;
-    left: -85vw;
-    top: 60px;
-    height: calc(100vh - 60px);
-    padding: 1rem 0;
-  }
-  .header-menu-dropdown.menu-open {
-    left: 0;
-  }
-  .menu-overlay {
-    top: 60px;
-    height: calc(100vh - 60px);
-  }
-  .header {
-    min-height: 60px;
-  }
-  #menu-toggle-btn {
-    padding: 6px;
-  }
-}
-
-/* Ajuste para formulário genérico */
-@media (max-width: 500px) {
-  .form-container {
-    padding: 1rem;
-    max-width: 95vw;
-  }
-  .form-container input,
-  .form-container button {
-    font-size: 0.95rem;
-    padding: 0.5rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr; /* 4 colunas */
   }
 }

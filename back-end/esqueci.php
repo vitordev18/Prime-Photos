@@ -51,21 +51,32 @@ session_start();
             </button>
 
             <div class="php-message" style="text-align: center; margin-top: 1rem; font-family: var(--secondary-font);">
-                <?php
+                                <?php
+                // Verifica se o formulário foi submetido (POST)
                 if ($_POST) {
                     $conn = conecta();
                     $email = trim(htmlspecialchars($_POST['email']));
                     
-                    $select = $conn->prepare("SELECT nome, senha FROM usuario WHERE email=:email");
+                    // Prepara a consulta para buscar o nome do usuário pelo email
+                    $select = $conn->prepare("SELECT nome FROM usuario WHERE email=:email");
                     $select->bindParam(':email', $email);
                     $select->execute();
                     $linha = $select->fetch();
                     
+                    // Se o email estiver cadastrado
                     if ($linha) {
-                        $token = $linha['senha']; 
+                        // GERAÇÃO DO TOKEN SEGURO: Cria um token aleatório simples.
+                        // Este token SUBSTITUIRÁ a senha temporariamente.
+                        $token = md5(uniqid(rand(), true)); 
+                        
                         $nome = $linha['nome'];
                         $seusite = "eq4.inf2"; 
                         
+                        // SALVAMENTO DO TOKEN: Atualiza o campo 'senha' no banco com o token temporário.
+                        // ISSO É CRUCIAL PARA A SEGURANÇA: Invalida a senha antiga e usa o token como chave de redefinição.
+                        ExecutaSQL($conn, "UPDATE usuario SET senha='$token' WHERE email='$email'");
+                        
+                        // Mensagem HTML para o email, contendo o link com o token gerado
                         $html="<h4>Redefinir sua senha</h4><br>
                                <b>Oi $nome</b>,<br>
                                Clique no link para redefinir sua senha:<br>
@@ -73,14 +84,20 @@ session_start();
                                    Redefinir Senha Agora
                                </a>";
                                
+                        // Salva o email na sessão para ser usado em redefinir.php
                         $_SESSION["email"] = $email;
                         
+                        // Envio do email
                         if (EnviaEmail($email, '*Recupere a sua senha*', $html)) {
                             echo "<b style='color: var(--strong-orange);'>Link de recuperação enviado com sucesso!</b><br>Verifique sua caixa de entrada (e spam).";
                         } else {
+                            // Em caso de falha no envio, o token temporário ainda está no banco.
+                            // Boa prática: Resetar o campo 'senha' para um valor não-token para evitar redefinição não autorizada.
+                            ExecutaSQL($conn, "UPDATE usuario SET senha='0' WHERE email='$email'"); 
                             echo "<b style='color: var(--dark-red);'>Erro ao enviar o email. Tente novamente mais tarde.</b>";
                         }
                     } else {
+                        // Email não encontrado
                         echo "<b style='color: var(--dark-red);'>Email não cadastrado no sistema.</b>";
                     }
                 }    
