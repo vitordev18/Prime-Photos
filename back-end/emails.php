@@ -1,32 +1,20 @@
 <?php 
-// mostra TODOS os erros do php
-ini_set ('display_errors',1); 
+ini_set ('display_errors',1); // mostra TODOS os erros do php
 error_reporting (E_ALL);
 
-PARA ENVIO DE EMAILS PHPMAILER 
-include __DIR__.'/PHPMailer/src/PHPMailer.php';
-include __DIR__.'/PHPMailer/src/SMTP.php';
-
-// inicia a sessao    
-session_start();
-// Envio de emails
-// // Marcelo C Peres 2023
-/* Exemplo: 
-if ( EnviaEmail ('fulano@fulano','Feliz Aniversario',
-                  '<html><body>Feliz niver</body></html>') 
-{
-  echo 'enviado com sucesso';
-}
-*/
+require_once dirname(__DIR__) . '/PHPMailer/src/PHPMailer.php';
+require_once dirname(__DIR__) . '/PHPMailer/src/SMTP.php';
 
 function EnviaEmail ($pEmailDestino, $pAssunto, $pHtml, 
                      $pUsuario = "ecommerce@efesonet.com", 
                      $pSenha = "u!G8mDRr6PBXkH6", 
                      $pSMTP = "smtp.efesonet.com") {    
+
+  global $PHPMailer;
+  
   try {
     //cria instancia de phpmailer
-    echo "<br>Tentando enviar para $pEmailDestino...";
-    $mail = new PHPMailer(); 
+    $mail = new PHPMailer\PHPMailer\PHPMailer();
     $mail->IsSMTP(); // diz ao php que o servidor eh SMTP
     // servidor smtp
     $mail->Host = $pSMTP; // configura o servidor
@@ -44,17 +32,14 @@ function EnviaEmail ($pEmailDestino, $pAssunto, $pHtml,
     $mail->Subject = $pAssunto; 
     $mail->Body = $pHtml;
     $enviado = $mail->Send(); // disparo
-     
-    if (!$enviado) {
-      echo "<br>Erro: " . $mail->ErrorInfo;
-    } 
-     
-    return $enviado;         
-      
-  } catch (phpmailerException $e) {
-    echo $e->errorMessage(); // erros do phpmailer
+
+    return $enviado;
+
+  } catch (PHPMailer\PHPMailer\Exception $e) {
+      return false;
   } catch (Exception $e) {
-    echo $e->getMessage(); // erros da aplicacao - gerais
+      echo $e->getMessage(); // erros da aplicacao - gerais
+      return false;
   }      
 }
 ?>
