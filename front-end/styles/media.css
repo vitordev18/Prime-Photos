@@ -22,7 +22,7 @@
   }
   
   .section-title {
-    font-size: 3rem; /* Título maior */
+    font-size: 3rem; 
   }
 
   /* LAYOUT DE GRADES */
@@ -38,7 +38,16 @@
   }
 
   .menu-item-link a {
-      font-size: 2.5rem; /* Fonte maior para links do menu */
+      font-size: 2.5rem; 
+  }
+
+  /* HEADER */
+  .header-logo {
+    width: 150px;
+  }
+
+  .main-title {
+    padding-left: 0; 
   }
 
   /* FOOTER */
@@ -48,7 +57,7 @@
   }
   
   .footer-links-group {
-    flex-direction: row; /* Colunas no footer */
+    flex-direction: row;
     gap: 2rem;
   }
 
@@ -89,10 +98,10 @@
   }
   
   .products-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Mantém a grid flexível ou 4 colunas */
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas */
   }
   
   .team-grid {
-    grid-template-columns: 1fr 1fr 1fr 1fr; /* 4 colunas */
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas */
   }
 }

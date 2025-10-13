@@ -8,7 +8,7 @@
   --light-gray: #e0e0e0;
   --main-cta-hover-bg: #ffb84d;
   --main-cta-hover-color: #222;
-  --menu-item-hover-bg: rgba(246, 170, 28, 0.12);
+  --menu-item-hover-bg: rgba(246, 170, 28, 0.15);
   --header-button-hover-bg: rgba(246, 170, 28, 0.15);
   --primary-font: "Playfair Display", serif;
   --secondary-font: "Inter", sans-serif;
@@ -66,13 +66,13 @@ body.loaded {
 }
 
 .header-logo {
-  width: 150px;
+  width: 130px;
   height: auto;
 }
 
 .header-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 .header-buttons {
@@ -91,11 +91,14 @@ body.loaded {
     transition: background-color 0.2s ease;
 }
 
-.header button:hover, .header a:hover {
+.header button:hover, 
+.header a:not(.header-left a):hover, 
+.header button:focus,
+.header a:not(.header-left a):focus {
     background-color: var(--header-button-hover-bg);
 }
 
-/* MENU LATERAL (OFF-CANVAS) */
+/* MENU LATERAL */
 .main-menu-overlay {
   position: fixed;
   top: 0;
@@ -143,7 +146,7 @@ body.loaded {
 }
 
 .menu-logo {
-  width: 150px;
+  width: 100px;
   height: auto;
   margin-bottom: 2rem;
 }
@@ -162,8 +165,8 @@ body.loaded {
   color: var(--white);
   text-decoration: none;
   font-family: var(--secondary-font); 
-  font-size: 0.5rem; /* Ajuste para o tamanho base do link do menu */
-  font-weight: 200;
+  font-size: 1.5rem; 
+  font-weight: 400; 
   padding: 0.625rem 0;
   transition: all 0.2s ease;
   position: relative;
@@ -201,7 +204,7 @@ body.loaded {
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
   font-family: var(--secondary-font);
-  font-weight: 200;
+  font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
   border: 2px solid transparent;
@@ -306,7 +309,7 @@ body.loaded {
     font-family: var(--primary-font);
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--strong-orange);
+    color: var(--strong-orange); 
     text-align: center;
     margin-bottom: 3rem;
 }
@@ -340,6 +343,30 @@ body.loaded {
     text-align: center;
 }
 
+.purchase-button {
+    font-family: var(--secondary-font);
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+    
+    background: linear-gradient(135deg, var(--strong-orange), var(--dark-red));
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(188, 57, 8, 0.5);
+}
+
+.purchase-button:hover,
+.purchase-button:focus {
+    background: linear-gradient(135deg, var(--dark-red), var(--strong-orange));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(98, 23, 8, 0.7);
+}
+
 .product-image {
     width: 100%;
     height: 180px;
@@ -352,7 +379,6 @@ body.loaded {
 .image-placeholder img {
     max-width: 100px;
     max-height: 100px;
-    filter: sepia(87%) saturate(3062%) hue-rotate(1deg) brightness(87%) contrast(93%); 
 }
 
 .product-title {
