@@ -110,61 +110,10 @@
                 <p class="product-description">
                   Impressões de alta qualidade em papel fotográfico premium.
                 </p>
-                <button class="purchase-button" aria-label="Adicionar Fotos Polaroid ao carrinho">Comprar</button>
-                </article>
-            </li>
-
-            <li class="product-card">
-              <article>
-                <figure class="product-image">
-                  <div class="image-placeholder">
-                    <img
-                      src="/assets/Elementos/Trio de Polaroids (amarela-centro).svg"
-                      alt="Imagem de adesivo em formato de estrela"
-                    />
-                  </div>
-                </figure>
-                <h3 class="product-title">Combo 1</h3>
-                <p class="product-description">
-                  Combo de 3 fotos Polaroid, receba um desconto proporcional.
-                </p>
-                <button class="purchase-button" aria-label="Adicionar Adesivos ao carrinho">Comprar</button>
-                </article>
-            </li>
-
-            <li class="product-card">
-              <article>
-                <figure class="product-image">
-                  <div class="image-placeholder">
-                    <img
-                      src="/assets/Elementos/Trio de Polaroids (laranja-centro).svg"
-                      alt="Imagem de adesivo em formato de estrela"
-                    />
-                  </div>
-                </figure>
-                <h3 class="product-title">Combo 2</h3>
-                <p class="product-description">
-                  Combo de 5 fotos Polaroid, receba um desconto proporcional.
-                </p>
-                <button class="purchase-button" aria-label="Adicionar Adesivos ao carrinho">Comprar</button>
-                </article>
-            </li>
-
-            <li class="product-card">
-              <article>
-                <figure class="product-image">
-                  <div class="image-placeholder">
-                    <img
-                      src="/assets/Elementos/Trio de Polaroids (vermelha-centro).svg"
-                      alt="Imagem de adesivo em formato de estrela"
-                    />
-                  </div>
-                </figure>
-                <h3 class="product-title">Combo 3</h3>
-                <p class="product-description">
-                  Combo de 10 fotos Polaroid, receba um desconto proporcional.
-                </p>
-                <button class="purchase-button" aria-label="Adicionar Adesivos ao carrinho">Comprar</button>
+                <form method="POST" action="back-end/carrinho.php">
+                  <input type="hidden" name="product_id" value="1"> 
+                  <button class="purchase-button" aria-label="Adicionar Fotos Polaroid ao carrinho">Comprar</button>
+                </form>
                 </article>
             </li>
           </ul>
