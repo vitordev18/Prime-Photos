@@ -1,45 +1,63 @@
 <?php 
-ini_set ('display_errors',1); // mostra TODOS os erros do php
-error_reporting (E_ALL);
+// Configurações de email através de variáveis de ambiente
+function getEmailConfig() {
+    return [
+        'usuario' => getenv('SMTP_USER') ?: "ecommerce@efesonet.com",
+        'senha' => getenv('SMTP_PASS') ?: "u!G8mDRr6PBXkH6",
+        'smtp' => getenv('SMTP_HOST') ?: "smtp.efesonet.com",
+        'porta' => getenv('SMTP_PORT') ?: 587
+    ];
+}
 
-require_once dirname(__DIR__) . '/PHPMailer/src/PHPMailer.php';
-require_once dirname(__DIR__) . '/PHPMailer/src/SMTP.php';
+function EnviaEmail($pEmailDestino, $pAssunto, $pHtml) {    
+    $config = getEmailConfig();
 
-function EnviaEmail ($pEmailDestino, $pAssunto, $pHtml, 
-                     $pUsuario = "ecommerce@efesonet.com", 
-                     $pSenha = "u!G8mDRr6PBXkH6", 
-                     $pSMTP = "smtp.efesonet.com") {    
+    try {
+        // Verificar dependências
+        if (!class_exists('PHPMailer\PHPMailer\PHPMailer')) {
+            require_once dirname(__DIR__) . '/PHPMailer/src/PHPMailer.php';
+            require_once dirname(__DIR__) . '/PHPMailer/src/SMTP.php';
+            require_once dirname(__DIR__) . '/PHPMailer/src/Exception.php';
+        }
 
-  global $PHPMailer;
-  
-  try {
-    //cria instancia de phpmailer
-    $mail = new PHPMailer\PHPMailer\PHPMailer();
-    $mail->IsSMTP(); // diz ao php que o servidor eh SMTP
-    // servidor smtp
-    $mail->Host = $pSMTP; // configura o servidor
-    $mail->SMTPAuth = true; // requer autenticacao com o servidor                         
-    $mail->SMTPSecure = 'tls';  // nivel de seguranca                           
-    $mail-> SMTPOptions = array ('ssl' => array ('verificar_peer' => false, 'verify_peer_name' => false,
-    'allow_self_signed' => true));
-    $mail->Port = 587;  // porta do serviço no servidor     
-    $mail->Username = $pUsuario; 
-    $mail->Password = $pSenha; 
-    $mail->From = $pUsuario; 
-    $mail->FromName = "Recuperação de senhas"; 
-    $mail->AddAddress($pEmailDestino, "Usuario"); 
-    $mail->IsHTML(true); // o conteudo enviado eh html (poderia ser txt comum sem formato)
-    $mail->Subject = $pAssunto; 
-    $mail->Body = $pHtml;
-    $enviado = $mail->Send(); // disparo
+        $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+        
+        // Configurações do servidor
+        $mail->isSMTP();
+        $mail->Host = $config['smtp'];
+        $mail->SMTPAuth = true;
+        $mail->Username = $config['usuario'];
+        $mail->Password = $config['senha'];
+        $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = $config['porta'];
+        
+        // Configurações de SSL
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            ]
+        ];
 
-    return $enviado;
+        // Remetente e destinatário
+        $mail->setFrom($config['usuario'], 'Prime Photos - Recuperação de Senha');
+        $mail->addAddress($pEmailDestino);
+        
+        // Conteúdo
+        $mail->isHTML(true);
+        $mail->Subject = $pAssunto;
+        $mail->Body = $pHtml;
+        $mail->AltBody = strip_tags($pHtml);
 
-  } catch (PHPMailer\PHPMailer\Exception $e) {
-      return false;
-  } catch (Exception $e) {
-      echo $e->getMessage(); // erros da aplicacao - gerais
-      return false;
-  }      
+        return $mail->send();
+
+    } catch (PHPMailer\PHPMailer\Exception $e) {
+        error_log("Erro PHPMailer: " . $e->errorMessage());
+        return false;
+    } catch (Exception $e) {
+        error_log("Erro geral no envio de email: " . $e->getMessage());
+        return false;
+    }      
 }
 ?>

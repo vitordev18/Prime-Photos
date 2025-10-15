@@ -24,12 +24,12 @@ session_start();
 <body>
     <header class="header">
         <div class="header-left">
-            <a href="/index.html" aria-label="Voltar para a página principal Prime Photos">
+            <a href="/index.php" aria-label="Voltar para a página principal Prime Photos">
               <img src="/assets/Logotipo/Logo PRIME PHOTOS (positivo).svg" alt="Logotipo Prime Photos" class="header-logo">
             </a>
         </div>
         <div class="header-buttons">
-            <a href="/front-end/login.html" aria-label="Voltar para a página de Login" class="header-back-link">
+            <a href="/back-end/login.php" aria-label="Voltar para a página de Login" class="header-back-link">
                 <img src="/assets/Elementos/Back.svg" alt="Ícone de seta para voltar" class="header-icon">
             </a>
         </div>
@@ -51,7 +51,7 @@ session_start();
             </button>
 
             <div class="php-message" style="text-align: center; margin-top: 1rem; font-family: var(--secondary-font);">
-                                <?php
+                <?php
                 // Verifica se o formulário foi submetido (POST)
                 if ($_POST) {
                     $conn = conecta();
@@ -86,13 +86,12 @@ session_start();
                                
                         // Salva o email na sessão para ser usado em redefinir.php
                         $_SESSION["email"] = $email;
-                        
+                         
                         // Envio do email
                         if (EnviaEmail($email, '*Recupere a sua senha*', $html)) {
                             echo "<b style='color: var(--strong-orange);'>Link de recuperação enviado com sucesso!</b><br>Verifique sua caixa de entrada (e spam).";
                         } else {
                             // Em caso de falha no envio, o token temporário ainda está no banco.
-                            // Boa prática: Resetar o campo 'senha' para um valor não-token para evitar redefinição não autorizada.
                             ExecutaSQL($conn, "UPDATE usuario SET senha='0' WHERE email='$email'"); 
                             echo "<b style='color: var(--dark-red);'>Erro ao enviar o email. Tente novamente mais tarde.</b>";
                         }

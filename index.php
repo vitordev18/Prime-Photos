@@ -17,6 +17,16 @@
   </head>
 
 <body>
+    <?php
+    session_start();
+    include "util.php";
+    
+    $usuarioLogado = obterUsuarioLogado();
+    $loginLink = $usuarioLogado ? '#' : '/back-end/login.php';
+    $loginText = $usuarioLogado ? 'Minha Conta' : 'Fazer Login';
+    $loginIcon = $usuarioLogado ? 'User.svg' : 'Login.svg';
+    ?>
+    
     <nav class="main-menu-overlay" id="main-menu-overlay" aria-label="Menu principal de navegação">
         <button id="menu-close-btn" class="menu-close-btn" aria-label="Fechar menu de navegação">
             &times; 
@@ -33,17 +43,24 @@
                     <a href="/front-end/sobre.html" class="menu-link-item">Sobre</a>
                 </li>
                 <li class="menu-item-link">
-                    <a href="/front-end/sobre.html/#equipe" class="menu-link-item">Equipe</a>
+                    <a href="/front-end/sobre.html#equipe" class="menu-link-item">Equipe</a>
                 </li>
                 <li class="menu-item-link">
                     <a href="/front-end/mvv.html" class="menu-link-item">Missão, Visão e Valores</a>
                 </li>
                 <li class="menu-item-action">
-                    <a href="/front-end/login.html" class="menu-action-link login-btn">Fazer Login</a>
+                    <a href="<?php echo $loginLink; ?>" class="menu-action-link login-btn">
+                        <?php echo $loginText; ?>
+                    </a>
                 </li>
                 <li class="menu-item-action">
-                    <a href="/back-end/carrinho.php" class="menu-action-link cart-btn">Carrinho de Compras</a>
+                    <a href="/back-end/carrinho_compras.php" class="menu-action-link cart-btn">Carrinho de Compras</a>
                 </li>
+                <?php if ($usuarioLogado): ?>
+                <li class="menu-item-action">
+                    <a href="/back-end/logout.php" class="menu-action-link logout-btn">Sair</a>
+                </li>
+                <?php endif; ?>
             </ul>
         </div>
     </nav>
@@ -56,7 +73,7 @@
           aria-label="Abrir menu expansivo">
           <img src="/assets/Elementos/Menu.svg" alt="Ícone de menu" class="header-icon" />
         </button>
-        <a href="/index.html" aria-label="Voltar para a página principal Prime Photos">
+        <a href="/index.php" aria-label="Voltar para a página principal Prime Photos">
             <img
                 src="/assets/Logotipo/Logo PRIME PHOTOS (positivo).svg"
                 alt="Logotipo Prime Photos"
@@ -66,18 +83,23 @@
       </div>
 
       <div class="header-buttons">
-        <a
-          href="/back-end/carrinho.php"
-          aria-label="Abrir carrinho de compras"
-          class="header-cart-btn">
+        <a href="/back-end/carrinho_compras.php" aria-label="Abrir carrinho de compras" class="header-cart-btn">
           <img src="/assets/Elementos/Carrinho de Compra.svg" alt="ícone Carrinho de compras" class="header-icon" />
+          <?php
+          $quantidadeCarrinho = isset($_SESSION['carrinho']) ? count($_SESSION['carrinho']) : 0;
+          if ($quantidadeCarrinho > 0): ?>
+            <span class="carrinho-quantidade"><?php echo $quantidadeCarrinho; ?></span>
+          <?php endif; ?>
         </a>
-        <a
-          href="/front-end/login.html"
-          aria-label="Fazer login"
-          class="header-login-link" >
-          <img src="/assets/Elementos/Login.svg" alt="ícone Login" class="header-icon" />
-        </a>
+        <?php if ($usuarioLogado): ?>
+          <div class="header-welcome">
+            <span>Olá, <?php echo htmlspecialchars($_SESSION['usuario_nome']); ?></span>
+          </div>
+        <?php else: ?>
+          <a href="/back-end/login.php" class="header-login-link">
+            <img src="/assets/Elementos/Login.svg" alt="Fazer Login" class="header-icon" />
+          </a>
+<?php endif; ?>
       </div>
     </header>
 
@@ -110,11 +132,15 @@
                 <p class="product-description">
                   Impressões de alta qualidade em papel fotográfico premium.
                 </p>
-                <form method="POST" action="back-end/carrinho.php">
+                <p class="product-price">R$ 8,00</p>
+                <p class="product-stock in-stock">Em estoque</p>
+                <form method="POST" action="/back-end/adicionar_carrinho.php">
                   <input type="hidden" name="product_id" value="1"> 
-                  <button class="purchase-button" aria-label="Adicionar Fotos Polaroid ao carrinho">Adicionar ao carrinho</button>
+                  <button class="purchase-button" aria-label="Adicionar Fotos Polaroid ao carrinho">
+                    Adicionar ao carrinho
+                  </button>
                 </form>
-                </article>
+              </article>
             </li>
           </ul>
         </div>
@@ -132,7 +158,7 @@
             <ul>
               <li>
                 <a href="https://www.instagram.com/primephotos_00/" target="_blank" aria-label="Instagram">
-                  <img src="/assets/Elementos/Instagram.svg" alt="" />
+                  <img src="/assets/Elementos/Instagram.svg" alt="Instagram" />
                 </a>
               </li>
             </ul>
