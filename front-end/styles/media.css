@@ -69,6 +69,15 @@
   .about-content {
     text-align: left;
   }
+
+  /* CARRINHO */
+    .carrinho-main {
+      padding: 4rem 2rem;
+    }
+
+    .carrinho-main h1 {
+      font-size: 3rem;
+    }
 }
 
 /* LARGE TABLETS / MEDIUM DESKTOPS (min-width: 992px) */

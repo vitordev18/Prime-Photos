@@ -42,7 +42,7 @@
                     <a href="/front-end/login.html" class="menu-action-link login-btn">Fazer Login</a>
                 </li>
                 <li class="menu-item-action">
-                    <a href="/front-end/carrinho.html" class="menu-action-link cart-btn">Carrinho de Compras</a>
+                    <a href="/back-end/carrinho.php" class="menu-action-link cart-btn">Carrinho de Compras</a>
                 </li>
             </ul>
         </div>
@@ -67,7 +67,7 @@
 
       <div class="header-buttons">
         <a
-          href="/front-end/carrinho.html"
+          href="/back-end/carrinho.php"
           aria-label="Abrir carrinho de compras"
           class="header-cart-btn">
           <img src="/assets/Elementos/Carrinho de Compra.svg" alt="ícone Carrinho de compras" class="header-icon" />
@@ -89,12 +89,12 @@
           especiais em recordações tangíveis e eternize suas histórias com
           qualidade e emoção.
         </p>
-        <a href="#produtos" class="main-cta"> Ver produtos </a>
+        <a href="#produtos" class="main-cta">Ver produto</a>
       </section>
 
       <section id="produtos" class="products-section">
         <div class="section-container">
-          <h2 class="section-title">Produtos</h2>
+          <h2 class="section-title">Produto</h2>
           <ul class="products-grid">
             <li class="product-card">
               <article>
@@ -112,7 +112,7 @@
                 </p>
                 <form method="POST" action="back-end/carrinho.php">
                   <input type="hidden" name="product_id" value="1"> 
-                  <button class="purchase-button" aria-label="Adicionar Fotos Polaroid ao carrinho">Comprar</button>
+                  <button class="purchase-button" aria-label="Adicionar Fotos Polaroid ao carrinho">Adicionar ao carrinho</button>
                 </form>
                 </article>
             </li>
