@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_verifica->execute();
         
         if ($stmt_verifica->fetch()) {
-            throw new Exception("Esse e-mail já está cadastrado. <a href='/front-end/login.html'>Fazer login</a>");
+            throw new Exception("Esse e-mail já está cadastrado. <a href='/back-end/login.php'>Fazer login</a>");
         }
         
         // Hash da senha
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt_insere->execute()) {
             echo "<div style='color: green; font-weight: bold;'>";
             echo "Cadastro realizado com sucesso!<br>";
-            echo "<a href='/front-end/login.html' style='color: blue;'>Fazer login</a>";
+            echo "<a href='/back-end/login.php' style='color: blue;'>Fazer login</a>";
             echo "</div>";
         } else {
             throw new Exception("Erro ao cadastrar usuário.");

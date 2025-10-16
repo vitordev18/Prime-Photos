@@ -1,4 +1,7 @@
 <?php
+$linharoot = $_SERVER['DOCUMENT_ROOT'];
+include "$linharoot/util.php";
+
 session_start();
 
 $email = isset($_GET['email']) ? $_GET['email'] : "";
@@ -47,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <link rel="stylesheet" href="/front-end/styles/reset.css">
     <link rel="stylesheet" href="/front-end/styles/form.css">
-    <link rel="stylesheet" href="/front-end/styles/style.css">
     <link rel="stylesheet" href="/front-end/styles/media.css">
     <style>
         .error { 
