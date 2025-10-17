@@ -1,55 +1,70 @@
-<?php
-$project_root = $_SERVER['DOCUMENT_ROOT'];
+<?php 
 
-// Incluindo os arquivos da biblioteca PHPMailer
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+   // mostra TODOS os erros do php
+   ini_set ( 'display_errors' , 1); 
+   error_reporting (E_ALL);
 
-require_once $project_root . '/PHPMailer/src/Exception.php';
-require_once $project_root . '/PHPMailer/src/PHPMailer.php';
-require_once $project_root . '/PHPMailer/src/SMTP.php';
+   //// PARA ENVIO DE EMAILS PHPMAILER //////
+   include __DIR__.'/../PHPMailer/src/PHPMailer.php';
+   include __DIR__.'/../PHPMailer/src/SMTP.php';
+   //////////////////////////////////////////
+   
+  //////////////////////////////////////////////////////////////// 
+  // Envio de emails
+  // Marcelo C Peres 2023
+  /* Exemplo: 
+     if ( EnviaEmail ('fulano@fulano','Feliz Aniversario',
+                      '<html><body>Feliz niver</body></html>') 
+     {
+      echo 'enviado com sucesso';
+     }
+  */   
+     
+  ////////////////////////////////////////////////////////////////
+  function EnviaEmail ( $pEmailDestino, $pAssunto, $pHtml, 
+                        $pUsuario = "ecommerce@efesonet.com", 
+                        $pSenha = "u!G8mDRr6PBXkH6", 
+                        $pSMTP = "smtp.efesonet.com" )  {    
+   try {
+ 
+     //cria instancia de phpmailer
+     echo "<br>Tentando enviar para $pEmailDestino...";
+     $mail = new PHPMailer(); 
+     $mail->IsSMTP();  // diz ao php que o servidor eh SMTP
+  
+     // servidor smtp
+     $mail->Host = $pSMTP;  // configura o servidor
+     $mail->SMTPAuth = true;      // requer autenticacao com o servidor                         
+     
+     $mail->SMTPSecure = 'tls';  // nivel de seguranca                           
+     $mail-> SMTPOptions = array ( 'ssl' => array ( 'verificar_peer' => false, 'verify_peer_name' => false,
+       'allow_self_signed' => true ) );
+      
+     $mail->Port = 587;  // porta do servi�o no servidor     
+      
+     $mail->Username = $pUsuario; 
+     $mail->Password = $pSenha; 
+     $mail->From = $pUsuario; 
+     $mail->FromName = "Recuperacao de senhas"; 
+  
+     $mail->AddAddress($pEmailDestino, "Usuario"); 
+     $mail->IsHTML(true); // o conteudo enviado eh html (poderia ser txt comum sem formato)
+     $mail->Subject = $pAssunto; 
+     $mail->Body = $pHtml;
+     $enviado = $mail->Send(); // disparo
+       
+     if (!$enviado) {
+        echo "<br>Erro: " . $mail->ErrorInfo;
+     } 
+     
+     return $enviado;         
+      
+   } catch (phpmailerException $e) {
+     echo $e->errorMessage(); // erros do phpmailer
+   } catch (Exception $e) {
+     echo $e->getMessage(); // erros da aplicacao - gerais
+   }      
+  }
 
-function EnviaEmail($pEmailDestino, $pAssunto, $pHtml) {    
-    // Configurações do seu servidor de e-mail
-    $smtp_user = "ecommerce@efesonet.com";
-    $smtp_pass = "u!G8mDRr6PBXkH6";
-    $smtp_host = "smtp.efesonet.com";
-    $smtp_port = 587;
 
-    $mail = new PHPMailer(true);
-
-    try {
-        // Configurações do servidor
-        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-        $mail->isSMTP();
-        $mail->Host       = $smtp_host;
-        $mail->SMTPAuth   = true;
-        $mail->Username   = $smtp_user;
-        $mail->Password   = $smtp_pass;
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = $smtp_port;
-        
-        // UTF-8 para compatibilidade com acentos
-        $mail->CharSet = 'UTF-8';
-
-        // Remetente e destinatário
-        $mail->setFrom($smtp_user, 'Prime Photos');
-        $mail->addAddress($pEmailDestino);
-        
-        // Conteúdo
-        $mail->isHTML(true);
-        $mail->Subject = $pAssunto;
-        $mail->Body    = $pHtml;
-        $mail->AltBody = strip_tags($pHtml);
-
-        $mail->send();
-        return true;
-
-    } catch (Exception $e) {
-        // Loga o erro para que você possa ver o que deu errado no servidor
-        error_log("PHPMailer Error: " . $mail->ErrorInfo);
-        return false;
-    }      
-}
 ?>
