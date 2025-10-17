@@ -12,6 +12,7 @@ if (!isset($_SESSION['usuario_id']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Coleta e valida os dados
 $usuario_id = $_SESSION['usuario_id'];
+$nome = trim($_POST['nome'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $telefone = trim($_POST['telefone'] ?? '');
 
@@ -24,17 +25,20 @@ try {
     $pdo = conecta();
     
     // Atualiza os dados no banco de dados de forma segura
-    $sql = "UPDATE usuario SET email = :email, telefone = :telefone WHERE id_usuario = :id";
+    $sql = "UPDATE usuario SET nome = :nome, email = :email, telefone = :telefone WHERE id_usuario = :id";
     $stmt = $pdo->prepare($sql);
 
     $stmt->execute([
+        ':nome' => $nome,
         ':email' => $email,
         ':telefone' => $telefone,
         ':id' => $usuario_id
     ]);
 
     // Atualiza o email na sessão para refletir a mudança imediatamente
+    $_SESSION['login'] = $nome;
     $_SESSION['usuario_email'] = $email;
+    $_SESSION['usuario_telefone'] = $telefone;
 
     header('Location: /back-end/perfil.php?status_dados=ok');
     exit();

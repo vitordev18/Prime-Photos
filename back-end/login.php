@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (password_verify($senha, $usuario['senha'])) {
                 session_regenerate_id(true);
                 $_SESSION['usuario_id'] = $usuario['id_usuario'];
-                $_SESSION['usuario_nome'] = $usuario['nome'];
+                $_SESSION['login'] = $usuario['nome'];
                 $_SESSION['usuario_email'] = $usuario['email'];
                 $_SESSION['statusConectado'] = true;
                 header("Location: /index.php");

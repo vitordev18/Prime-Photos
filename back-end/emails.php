@@ -1,5 +1,4 @@
 <?php
-// Usando a superglobal $_SERVER['DOCUMENT_ROOT'] para criar um caminho absoluto e confiável
 $project_root = $_SERVER['DOCUMENT_ROOT'];
 
 // Incluindo os arquivos da biblioteca PHPMailer

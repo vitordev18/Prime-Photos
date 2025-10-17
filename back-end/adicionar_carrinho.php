@@ -25,24 +25,22 @@ if ($id_produto === false) {
 try {
     $pdo = conecta();
 
-    // Busca informações do produto e o estoque no banco de dados
-    $stmt = $pdo->prepare("SELECT id_produto, nome, valor, estoque(id_produto) as estoque_disponivel FROM produto WHERE id_produto = ?");
+    // Adicionada verificação para não incluir produtos marcados como 'excluido'.
+    $stmt = $pdo->prepare(
+        "SELECT id_produto, nome, valor_unitario 
+         FROM produto 
+         WHERE id_produto = ? AND excluido = false"
+    );
     $stmt->execute([$id_produto]);
     $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Valida se o produto existe e tem estoque
+    // Valida se o produto existe e não está excluído
     if (!$produto) {
-        // Produto não encontrado no banco, redireciona
-        header("Location: /index.php#produtos");
+        // Produto não encontrado ou já foi excluído, redireciona
+        header("Location: /index.php#produtos?erro=produto_invalido");
         exit();
     }
     
-    if ($produto['estoque_disponivel'] <= 0) {
-        // Redireciona com uma mensagem de erro
-        header("Location: /index.php#produtos?erro=sem_estoque");
-        exit();
-    }
-
     // Lógica para adicionar ou incrementar no carrinho
     if (!isset($_SESSION['carrinho'])) {
         $_SESSION['carrinho'] = [];
@@ -50,18 +48,14 @@ try {
     
     // Se o item já está no carrinho, apenas incrementa a quantidade
     if (isset($_SESSION['carrinho'][$id_produto])) {
-        // Verifica se a quantidade desejada não ultrapassa o estoque
-        if ($_SESSION['carrinho'][$id_produto]['quantidade'] < $produto['estoque_disponivel']) {
-            $_SESSION['carrinho'][$id_produto]['quantidade']++;
-        }
+        $_SESSION['carrinho'][$id_produto]['quantidade']++;
     } else {
         // Se for um novo item, adiciona com os dados do banco
         $_SESSION['carrinho'][$id_produto] = [
             'id' => $produto['id_produto'],
             'nome' => $produto['nome'],
-            'valor_unitario' => $produto['valor'],
-            'quantidade' => 1,
-            'estoque_maximo' => $produto['estoque_disponivel']
+            'valor_unitario' => $produto['valor_unitario'],
+            'quantidade' => 1
         ];
     }
     
@@ -69,7 +63,9 @@ try {
     exit();
 
 } catch (PDOException $e) {
+    // Para depuração, é bom registrar o erro real
     error_log("Erro ao adicionar ao carrinho: " . $e->getMessage());
+    // Mensagem genérica para o usuário
     header("Location: /index.php#produtos?erro=db_error");
     exit();
 }

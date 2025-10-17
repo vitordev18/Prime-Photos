@@ -2,9 +2,8 @@
 $linharoot = $_SERVER['DOCUMENT_ROOT'];
 include_once "$linharoot/util.php";
 
-// A lógica de header/footer agora é centralizada
 $page_title = "Carrinho de Compras";
-$page_css[] = "/front-end/styles/carrinho.css"; // Inclui o CSS específico do carrinho
+$page_css[] = "/front-end/styles/carrinho.css";
 include "$linharoot/templates/header.php";
 
 if (!$usuarioLogado) {
@@ -16,6 +15,7 @@ if (!$usuarioLogado) {
 if (!isset($_SESSION['carrinho'])) {
     $_SESSION['carrinho'] = [];
 }
+
 $carrinho = &$_SESSION['carrinho']; // Usando referência para facilitar a escrita
 
 // Lógica para Aumentar / Diminuir / Remover itens
@@ -26,7 +26,7 @@ if (isset($_GET['action']) && isset($_GET['id_produto'])) {
     if (isset($carrinho[$id_produto])) {
         switch ($action) {
             case 'increase':
-                if ($carrinho[$id_produto]['quantidade'] < $carrinho[$id_produto]['estoque_maximo']) {
+                if ($carrinho[$id_produto]['quantidade'] < $carrinho[$id_produto]['estoque']) {
                     $carrinho[$id_produto]['quantidade']++;
                 }
                 break;
@@ -40,10 +40,17 @@ if (isset($_GET['action']) && isset($_GET['id_produto'])) {
                 unset($carrinho[$id_produto]);
                 break;
         }
-        // Redireciona para a mesma página sem os parâmetros GET para evitar reenvios
         header('Location: carrinho_compras.php');
         exit();
     }
+}
+
+// Calcular totais ANTES de finalizar a compra
+$total_itens = 0;
+$total_valor = 0;
+foreach ($carrinho as $item) {
+    $total_itens += $item['quantidade'];
+    $total_valor += $item['valor_unitario'] * $item['quantidade'];
 }
 
 // Lógica para Finalizar a Compra
@@ -51,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['finalizar']) && !empty
     try {
         $pdo = conecta();
         $pdo->beginTransaction();
-
+        
         $sql_compra = "INSERT INTO compra (fk_usuario, data, acrescimo_total, sessao, status) VALUES (?, NOW(), ?, ?, ?)";
         $stmt_compra = $pdo->prepare($sql_compra);
         $stmt_compra->execute([$_SESSION['usuario_id'], 0, session_id(), 'reservado']);
@@ -65,9 +72,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['finalizar']) && !empty
         }
 
         $pdo->commit();
-        $carrinho = []; // Limpa o carrinho
+        $carrinho = []; // Esvazia o carrinho da sessão
         
-        // Redireciona para uma página de sucesso (ou home com mensagem)
         header('Location: /index.php?status=compra_ok');
         exit();
 
@@ -77,14 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['finalizar']) && !empty
         header('Location: carrinho_compras.php?erro=finalizar');
         exit();
     }
-}
-
-// Calcular totais
-$total_itens = 0;
-$total_valor = 0;
-foreach ($carrinho as $item) {
-    $total_itens += $item['quantidade'];
-    $total_valor += $item['valor_unitario'] * $item['quantidade'];
 }
 ?>
 
@@ -132,7 +130,7 @@ foreach ($carrinho as $item) {
             </div>
         </div>
         
-        <form method="POST" class="carrinho-form">
+        <form method="POST" class="carrinho-form" action="carrinho_compras.php">
             <button class="finalizar-compra-btn" type="submit" name="finalizar">Finalizar Compra</button>
         </form>
     <?php endif; ?>

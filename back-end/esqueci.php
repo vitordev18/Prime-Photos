@@ -2,7 +2,6 @@
 $linharoot = $_SERVER['DOCUMENT_ROOT'];
 include "$linharoot/util.php";
 include "$linharoot/back-end/emails.php";
-
 session_start();
 
 $mensagem = "";

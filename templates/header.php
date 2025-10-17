@@ -1,8 +1,9 @@
 <?php
-session_start();
-// Garante que o caminho para o util.php funcione de qualquer lugar
 $linharoot = $_SERVER['DOCUMENT_ROOT'];
 include_once "$linharoot/util.php";
+
+session_start();
+
 
 $usuarioLogado = obterUsuarioLogado();
 ?>
@@ -86,7 +87,7 @@ $usuarioLogado = obterUsuarioLogado();
         
         <?php if ($usuarioLogado): ?>
           <div class="header-welcome">
-            <span>Olá, <?php echo htmlspecialchars($usuarioLogado['nome']); ?></span>
+            <span>Olá, <?php echo htmlspecialchars($usuarioLogado['nome'] ?? 'Visitante'); ?></span>
           </div>
         <?php else: ?>
           <a href="/back-end/login.php" class="header-login-link" aria-label="Fazer Login">
