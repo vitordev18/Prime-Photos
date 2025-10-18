@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 $linharoot = $_SERVER['DOCUMENT_ROOT'];
 include "$linharoot/util.php";
 
@@ -92,10 +95,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="status-message"><?php echo htmlspecialchars($mensagemErro); ?></div>
             <?php endif; ?>
             <label for="email" class="login-label">Email:</label>
-            <input type="email" name="email" id="email" class="login-input" required autofocus value="<?php echo $email_preenchido; ?>" />
+            
+            <input type="email" name="email" id="email" class="form-input" required autofocus value="<?php echo $email_preenchido; ?>" />
+            
             <label for="senha" class="login-label">Senha:</label>
-            <input type="password" name="senha" id="senha" class="login-input" required />
-            <button type="submit" class="login-submit-enter">Entrar</button>
+            
+            <input type="password" name="senha" id="senha" class="form-input" required />
+            
+            <button type="submit" class="form-submit-button">Entrar</button>
+            
             <div class="form-links">
                 <button type="button" onclick="window.location.href='/back-end/cadastro.php'" class="form-link">Não tem conta? Cadastre-se</button>
                 <button type="button" onclick="window.location.href='/back-end/esqueci.php'" class="form-link">Esqueci minha senha</button>

@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 $linharoot = $_SERVER['DOCUMENT_ROOT'];
 include "$linharoot/util.php";
 
@@ -60,34 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 5px;
             text-align: center;
         }
-        
-        .login-submit-enter {
-            font-family: var(--secondary-font);
-            font-size: 1.1rem;
-            font-weight: 700;
-            border: none;
-            border-radius: 12px;
-            padding: 1.2rem 2rem;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            text-align: center;
-            width: 100%;
-            box-sizing: border-box;
-            background: linear-gradient(135deg, var(--strong-orange), var(--dark-red));
-            color: var(--white);
-            box-shadow: 0 8px 25px rgba(188, 57, 8, 0.4);
-            margin-top: 0.5rem;
-        }
-
-        .login-submit-enter:hover {
-            background: linear-gradient(135deg, var(--dark-red), var(--strong-orange));
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(98, 23, 8, 0.6);
-        }
     </style>
 </head>
 <body>
@@ -113,22 +88,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php endif; ?>
 
             <label for="nome" class="login-label">Nome completo:</label>
-            <input type="text" name="nome" id="nome" class="login-input" required minlength="2" 
+            <input type="text" name="nome" id="nome" class="form-input" required minlength="2" 
                    value="<?php echo htmlspecialchars($dadosForm['nome']); ?>" autofocus>
 
             <label for="email" class="login-label">Email:</label>
-            <input type="email" name="email" id="email" class="login-input" required
+            <input type="email" name="email" id="email" class="form-input" required
                    value="<?php echo htmlspecialchars($dadosForm['email']); ?>">
 
             <label for="telefone" class="login-label">Telefone (opcional):</label>
-            <input type="tel" name="telefone" id="telefone" class="login-input" 
+            <input type="tel" name="telefone" id="telefone" class="form-input" 
                    placeholder="(11) 99999-9999"
                    value="<?php echo htmlspecialchars($dadosForm['telefone']); ?>">
 
             <label for="senha" class="login-label">Senha (mínimo 6 caracteres):</label>
-            <input type="password" name="senha" id="senha" class="login-input" required minlength="6">
+            <input type="password" name="senha" id="senha" class="form-input" required minlength="6">
 
-            <button type="submit" class="login-submit-enter">Cadastrar</button>
+            <button type="submit" class="form-submit-button">Cadastrar</button>
             
             <div class="form-links">
                 <div class="form-links">

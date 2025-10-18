@@ -1,90 +1,80 @@
 <?php
-function conecta() {
-    try {
-        $host = "projetoscti.com.br";
-        $dbname = "eq4.inf2";
-        $user = "eq4.inf2";
-        $password = "eq42675";
-        $port = "54432";
-        
-        $pdo = new PDO("pgsql:host=$host;dbname=$dbname;port=$port", $user, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+    
+    function conecta($params = "") {
+        $pdo = new PDO("pgsql:host=projetoscti.com.br;
+                        port=54432;
+                        dbname=eq4.inf2;
+                        user=eq4.inf2;
+                        password=eq42675");       
         return $pdo;
-    } catch(PDOException $e) {
-        error_log("Erro de conexão: " . $e->getMessage());
-        throw new Exception("Não foi possível conectar ao banco de dados");
     }
-}
-
-// Função para executar INSERT, UPDATE, DELETE
-function ExecutaSQL($paramConn, $paramSQL, $params = []) {
-    try {
-        $stmt = $paramConn->prepare($paramSQL);
-        
-        foreach($params as $campo => $valor) {
-            $stmt->bindValue($campo, $valor);
-        }
-        
-        return $stmt->execute();
-    } catch(PDOException $e) {
-        error_log("Erro ExecutaSQL: " . $e->getMessage() . " - SQL: " . $paramSQL);
-        return false;
+    
+    // primeira versao
+    function ExecutaSQL ($paramConn, $paramSQL) 
+    {
+     return $paramConn->exec($paramSQL) > 0;
     }
-}
 
-// Função para buscar um único valor (versão moderna)
-function ValorSQL($paramConn, $paramSQL, $params = []) {
-    try {
-        $stmt = $paramConn->prepare($paramSQL);
-        
-        foreach($params as $campo => $valor) {
-            $stmt->bindValue($campo, $valor);
+    function ValorSQL1 ($paramConn, $paramSQL) 
+    {
+      // com query vc nao passa parametros, apenas $conn e frase SQL  
+      $select = $paramConn->query($paramSQL);
+      $linha = $select->fetch();
+      return $linha[0];
+      
+      /* a funcao precisa funcionar qquer q seja o campo que esta sendo pedido,
+         nesse ponto vc nao saberá qual o nome do campo q deve retornar, 
+         por isso, vc usa o indice ZERO -  a vantagem desse comando eh 
+         receber um unico valor */
+    }
+
+    // segunda versao usando passagem e prepare internamente
+    function ValorSQL2 ($paramConn, $paramSQL, $params) 
+    {  
+        /*
+        Exemplo de uso 
+        ------------------------------
+        $valor_unitario = valorsql2($conn, "select valor_unitario from produto 
+                                    where id_produto = :id_produto", 
+                                    [ ["campo" => ":idproduto", 
+                                       "valor" => $id_produto] ]);
+
+        */
+        $select = $paramConn->prepare($paramSQL);
+        foreach($params as $param) { 
+            /* cada linha lida é uma condicao:
+               o nome do 'campo' e o 'valor do campo' 
+               a cada iterao, carrega-se um bindParam */
+            $select->bindParam($param['campo'], $param['valor']);
         }
-        
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_NUM);
-        
-        return $result ? $result[0] : null;
-    } catch(PDOException $e) {
-        error_log("Erro ValorSQL: " . $e->getMessage() . " - SQL: " . $paramSQL);
+        $select->execute();
+        $linha = $select->fetch();
+
+        return $linha[0]; 
+
+        /* a funcao precisa funcionar qquer q seja o campo que esta sendo pedido,
+           nesse ponto vc nao saberá qual o nome do campo q deve retornar, 
+           por isso, vc usa o indice ZERO -  a vantagem desse comando eh 
+           receber um unico valor */
+    }
+
+    // Função para verificar se usuário está logado
+    function usuarioEstaLogado() {
+        return isset($_SESSION['statusConectado']) && $_SESSION['statusConectado'] === true;
+    }
+
+    // Função para obter dados do usuário logado
+    function obterUsuarioLogado() {
+        if (usuarioEstaLogado()) {
+            return [
+                'id' => $_SESSION['usuario_id'] ?? null,
+                'nome' => $_SESSION['login'] ?? null,
+                'email' => $_SESSION['usuario_email'] ?? null,
+                'admin' => $_SESSION['admin'] ?? false
+            ];
+        }
         return null;
     }
-}
-
-// Função para buscar múltiplas linhas
-function BuscarTodos($paramConn, $paramSQL, $params = []) {
-    try {
-        $stmt = $paramConn->prepare($paramSQL);
-        
-        foreach($params as $campo => $valor) {
-            $stmt->bindValue($campo, $valor);
-        }
-        
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch(PDOException $e) {
-        error_log("Erro BuscarTodos: " . $e->getMessage() . " - SQL: " . $paramSQL);
-        return [];
-    }
-}
-
-// Função para verificar se usuário está logado
-function usuarioEstaLogado() {
-    return isset($_SESSION['statusConectado']) && $_SESSION['statusConectado'] === true;
-}
-
-// Função para obter dados do usuário logado
-function obterUsuarioLogado() {
-    if (usuarioEstaLogado()) {
-        return [
-            'id' => $_SESSION['usuario_id'] ?? null,
-            'nome' => $_SESSION['login'] ?? null,
-            'email' => $_SESSION['usuario_email'] ?? null,
-            'admin' => $_SESSION['admin'] ?? false
-        ];
-    }
-    return null;
-}
 ?>
